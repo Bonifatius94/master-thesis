@@ -7,8 +7,11 @@ in my own simulator and let it interact with pedestrians controlled by Social Fo
 The results show a very promising defensive policy that manages to avoid collisions
 with pedestrians entirely, in constrast to prior works with 50% collisions.
 
+![](./results/videos/jetpack.gif)
+
 ## Structure
 
+- code/ contains the code of robot-sf and pysocialforce, as well as the (unfinished) dreamer implementation
 - maps/ contains the training environments the were used to traing the robot
 - proofs/ contains a mathematical proof of the obstacle force as a virtual potential field
 - results/ contains videos of the policies, trained agents, training logs and performance profiles
