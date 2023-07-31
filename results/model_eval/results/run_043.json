@@ -1,0 +1,6 @@
+{
+    "0": {"route_completion_rate": 1.0, "obstacle_collision_rate": 0.0, "pedestrian_collision_rate": 0.0, "timeout_rate": 0.0},
+    "1": {"route_completion_rate": 0.95, "obstacle_collision_rate": 0.02, "pedestrian_collision_rate": 0.03, "timeout_rate": 0.0},
+    "2": {"route_completion_rate": 0.6, "obstacle_collision_rate": 0.09, "pedestrian_collision_rate": 0.3, "timeout_rate": 0.01},
+    "3": {"route_completion_rate": 0.5, "obstacle_collision_rate": 0.15, "pedestrian_collision_rate": 0.32, "timeout_rate": 0.03}
+}

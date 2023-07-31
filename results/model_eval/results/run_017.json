@@ -1,0 +1,6 @@
+{
+    "0": {"route_completion_rate": 0.3, "obstacle_collision_rate": 0.0, "pedestrian_collision_rate": 0.0, "timeout_rate": 0.7},
+    "1": {"route_completion_rate": 0.38, "obstacle_collision_rate": 0.06, "pedestrian_collision_rate": 0.02, "timeout_rate": 0.54},
+    "2": {"route_completion_rate": 0.594059405940594, "obstacle_collision_rate": 0.06930693069306931, "pedestrian_collision_rate": 0.10891089108910891, "timeout_rate": 0.22772277227722773},
+    "3": {"route_completion_rate": 0.38613861386138615, "obstacle_collision_rate": 0.09900990099009901, "pedestrian_collision_rate": 0.19801980198019803, "timeout_rate": 0.31683168316831684}
+}

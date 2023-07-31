@@ -1,0 +1,9 @@
+[submodule "code/robot-sf"]
+	path = code/robot-sf
+	url = https://github.com/Bonifatius94/robot-sf
+[submodule "code/rl-algos"]
+	path = code/rl-algos
+	url = https://github.com/Bonifatius94/rl-algos
+[submodule "code/PySocialForce"]
+	path = code/PySocialForce
+	url = https://github.com/Bonifatius94/PySocialForce
