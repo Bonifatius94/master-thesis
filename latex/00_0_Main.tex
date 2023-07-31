@@ -1,0 +1,57 @@
+%   Version 2.0 | Lehrstuhl Regelungstechnik & Mechatronik  |  15.05.2020
+%%%%%%%%%%%Zusätzlich benötigte Pakete in den header einfügen%%%%%%%%%%%%
+\input{src/header}                                                  %
+%%%%%%%%%%%%%%%%%   Diesen Abschnitt anpassen!    %%%%%%%%%%%%%%%%%%%%%%%
+% Arbeit
+\newcommand{\artderausarbeitung}{Masterarbeit}
+\newcommand{\titelderarbeit}{Lokale Navigation von Mikromobilitätsfahrzeugen mittels Reinforcement Learning}
+\newcommand{\eingereicht}{31.\,07.\,2023}
+% Autor
+\newcommand{\namedesautors}{Marco Tröster}
+% Lehrstuhl und Betreuer
+\newcommand{\studiengang}{Informatik (M.Sc.)}
+\newcommand{\lehrstuhl}{Lehrstuhl für Mechatronik}
+\newcommand{\fakultaet}{Fakultät für Angewandte Informatik}
+\newcommand{\erstgutachter}{Prof.~Dr.-Ing.~Lars Mikelsons}
+\newcommand{\zweitgutachter}{Prof.~Dr.~Jörg Hähner}
+\newcommand{\betreuer}{Lennart Luttkus, M.Sc.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{src/pagestyle}   % Pagestyles nicht verändern!               %
+\addbibresource{references.bib}                                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hier können eigene Befehle angelegt werden:
+%\newcommand{\Name}{Definition}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+\begin{document}                                                        %
+\onehalfspacing                                                         %    
+\input{src/titlepage}                                               %
+\pagestyle{scrheadings}                                                 %
+\pagenumbering{Roman}                                                   %
+%%%%%%%%%%       Nicht benötigte Teile auskommentieren    %%%%%%%%%%%%%%%
+%%\input{00_1_Vorwort}
+\input{00_2_Kurzfassung}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents{\thispagestyle{pagenumberstyle}}                       %
+%\input{00_3_Abkuerzungsverzeichnis}                                  %
+\cleardoublepage                                                        %
+\pagenumbering{arabic}                                                  %
+%%%%%%%%%%%%%%     Eigene Kapitel hier einfügen    %%%%%%%%%%%%%%%%%%%%%%
+\input{01_Einleitung}
+\input{02_0_Grundlagen}
+\input{03_0_Research}
+\input{04_0_Konzept_und_Umsetzung}
+\input{05_0_Trainings_und_Ergebnisse}
+\input{06_Zusammenfassung}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage                                                        %
+\listoffigures{\thispagestyle{pagenumberstyle}}                         %
+\listoftables{\thispagestyle{pagenumberstyle}}                          %
+\printbibliography{\thispagestyle{pagenumberstyle}}                     %
+%\addchap{Anhang}                                                       %
+\appendix                                                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{98_Anhang.tex}                                                   
+\input{99_Abschlusserklaerung.tex}                                      
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}                                                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

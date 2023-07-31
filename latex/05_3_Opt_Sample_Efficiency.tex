@@ -1,0 +1,229 @@
+
+\section{Optimierung der Sample Efficiency}\label{sec:SampleEff}
+
+Dieser Abschnitt befasst sich mit der Verbesserung der Trainingsdateneffizienz,
+auch engl. Sample Efficiency genannt. Wie in vorherigen Abschnitten demonstriert wurde,
+sind für qualitativ hochwertige Fahragenten keine rechenintensiven Neuronalen Netze
+notwendig. Dementsprechend wenden Trainingsalgorithmen verhältnismäßig viel Zeit für
+das Sammeln der Trainingsdaten auf. Ist eine hinreichende Performanz der Simulationsumgebung
+hinsichtlich der inhärenten Berechnungskomplexität gegeben, muss das gewählte Lernverfahren
+dahingehend optimiert werden, bereits gute Ergebnisse mit möglichst wenigen Trainingsdaten
+zu erzielen. Die Durchführbarkeit von Lerntechniken des Bestärkenden Lernens in komplexen
+Simulationsumgebungen hängt demnach stark von der Wahl eines geeigneten Lernverfahrens und
+dessen Parametrisierung ab. In den folgenden Abschnitten wird daher untersucht,
+wie die Trainingsdateneffizienz beim Erlernen von Fahrverhaltensweisen gesteigert werden kann.
+
+\subsection{Optimierung der Lernparameter}
+Wie bereits im Abschnitt über PPO \ref{sec:ppo} erläutert, kann die Trainingsdateneffizienz
+erheblich durch die Wahl eines geeigneten Lernverfahrens gesteigert werden. Steht ein
+geeigneter Lernalgorithmus fest, können dessen Parameter an die jeweilige Problemstellung
+angepasst werden, um weitere Effizienzsteigerungen zu erreichen.\\
+
+In diesem Zusammenhang stellt sich Effizienz als das Erlernen von Fahrqualität
+pro Trainingszeit dar. Hierbei wird die Qualität durch die Rate unfallfrei gefahrener
+Routen (\emph{Route Completion Rate}) und die Trainingszeit durch die simulierten
+Trainingsschritte bemessen. Um diskrete Zeitpunkte bei der Erreichung einer gewissen
+Qualität zu bestimmen, werden Qualitätsstufen in Schritten von jeweils 1\% definiert.
+Die Anregung einer guten Qualität soll doppelt so hoch als deren möglichst schnelle
+Erreichung gewichtet werden, sodass zunächst Parametrisierungen gefunden werden, die
+eine ausreichende Qualität ermöglichen. Anschließend wird die benötigte Trainingszeit
+für deren Erreichung minimiert. Es ergibt sich folgende zwischen 0 und 1 normierte
+Bewertungsfunktion $U$ für die erreichten Qualitätsstufen
+$Q \subseteq \{q_1, q_2, ..., q_{100}\}$ und die für deren erstmalige Erreichung
+aufgewendeten Simulationsschritte $s(q)$ mit maximalen Schritten $s_{max}$.
+
+\begin{equation}
+\begin{aligned}
+U(Q) = \frac{\sum_{q_i \epsilon Q} q_i \cdot
+    (2 + \frac{s_{max} - s(q_i)}{s_{max}})}{3 \cdot \sum_{q_i \epsilon Q} q_i}
+\end{aligned}
+\end{equation}
+
+Da die gleichzeitige Optimierung aller Parameter sehr zeitaufwendig und kostspielig 
+ist, wurden die optimierbaren Parameter in 3 Gruppen unterteilt und nacheinander
+mit \emph{Optuna} \cite{akiba2019optuna} verbessert. Es handelt sich um Parameter
+der Simulationsumgebung, des Lernverfahrens PPO und der Belohnungsfunktion.\\
+
+\subsubsection{Optimierung des Lernverfahrens}
+Bei der Optimierung des Lernverfahrens wurde zum einen die Auswirkung verschiedener
+Modellstrukturen und zum anderen die Wahl der Lernparameter von PPO untersucht.
+Als Modellstrukturen steht zur Wahl, ob ein Feature Extractor verwendet werden soll.
+Falls ein Feature Extractor zum Einsatz kommt, können für jede Faltungsschicht
+die Anzahl der Filter, die Größe des Faltungskerns und die Dropout-Rate gewählt werden.
+Zudem können die Anzahl der Simulationsschritte bis zur nächsten Modellaktualisierung,
+die während der Modellaktualisierung durchgeführten PPO Updates mit denselben
+Trainingsdaten und die Anzahl der parallel laufenden Simulationsumgebungen gesteuert
+werden. Folgende Tabelle \label{tab:OptTraining} zeigt die möglichen Parametrisierungen
+je Parameter.\\
+
+\begin{table}
+  \centering
+\begin{tabularx}{0.8\textwidth} { 
+  | >{\raggedright\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\raggedleft\arraybackslash}X | }
+ \hline
+ Feature Extractor & \{ ja, nein \} \\
+ \hline
+ Anzahl der Faltungen & \{ 8, 16, 32, 64, 128, 256 \} \\
+ \hline
+ Größe des Faltungskerns & \{ 3, 5, 7, 9 \} \\
+ \hline
+ Dropout-Rate  & (0, 1) \\
+\hline
+Anzahl Environments & \{ 32, 40, 48, 56, 64 \} \\
+ \hline
+ Schritte zum nächsten Update & \{ 128, 256, 512, 1024, 2048 \} \\
+ \hline
+ Anzahl PPO Epochs & \{ 2, 3, ..., 20 \} \\
+ \hline
+\end{tabularx}
+\caption{Zu optimierende Parameter der Modellstruktur und des Lernverfahrens}
+\label{tab:OptTraining}
+\end{table}
+
+Es zeigt sich, dass eine Modellstruktur mit Feature Extractor und möglichst vielen
+Filtern mit Kerngröße 5 in den ersten Faltungsschichten bevorzugt wird. Des weiteren
+kann die von Stable Baselines 3 voreingestellte Anzahl der Trainingsepochen
+mit denselben Trainingsdaten von 10 empirisch bestätigt werden. Als Dropout-Raten
+wählt Optuna für die ersten Faltungsschichten eine etwas niedrigere Rate von 15\%,
+bestätigt jedoch die 30\% der folgenden Schichten. Die Simulationsschritte bis
+zur nächsten Modellaktualisierung können mit 1024 etwas niedriger als zuvor mit 2048
+gewählt werden. Da trainierte Agenten ca. 3-5 Sekunden simulierte Zeit benötigen,
+um von Wegpunkt zu Wegpunkt zu navigieren, was je nach Aktionsfrequenz maximal 50
+Simulationsschritten entspricht, kann der Parameter ggf. noch weiter gesenkt werden.
+Damit die für eine Modellaktualisierung verwendete Trainingsdatenmenge gleich groß
+bleibt, kann im Gegenzug der Parallelisierungsgrad durch mehr Simulationsumgebungen
+erhöht werden.
+
+\subsubsection{Optimierung der Belohnungsstruktur}
+Wie bereits erwähnt spielt die Wahl einer geeigneten Belohnungsfunktion eine
+wichtige Rolle beim Bestärkenden Lernen. Relativ zu der auf 1 normierten Belohnung
+für das Erreichen des Wegpunkts experimentiert Optuna mit der Höhe des Step Discounts
+und den Strafen für Kollisionen mit Fußgängern und Hindernissen. Folgende Tabelle
+\label{tab:OptReward} listet die möglichen Parametrisierungen je Parameter auf.\\
+
+\begin{table}[h]
+  \centering
+\begin{tabularx}{0.8\textwidth} { 
+  | >{\raggedright\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\raggedleft\arraybackslash}X | }
+ \hline
+ Erreichen des Wegpunkts & \{ 1 \} \\
+ \hline
+ Kollision mit Fußgänger & \{ -10, -9, ..., -1 \} \\
+ \hline
+ Kollision mit Hindernis & \{ -10, -9, ..., -1 \} \\
+ \hline
+ Step Discount & [ -1, 0 ] \\
+ \hline
+\end{tabularx}
+\caption{Zu optimierende Parameter der Belohnungsstruktur}
+\label{tab:OptReward}
+\end{table}
+
+Eine entsprechend durchgeführte Optimierung bestätigt größtenteils die initiale
+Parameterbelegung aus der Konzeption in Abschnitt \ref{sec:Reward}. Die besten Trainingsläufe
+weisen einen Step Discount von 0.15 auf, was sehr nah am ursprünglich gewählten Wert von 0.1 liegt.
+Auch bei den Strafen für Kollisionen mit Fußgängern und Hindernissen werden ähnliche Werte
+mit 2 und 5 gewählt. Hintergrund für die ursprüngliche Wahl derselben Bestrafung für
+Kollisionen mit Fußgängern und Hindernissen ist, dass der Agent auf einem Standbild die
+verschiedenen Entitäten anhand der Entfernungen des LiDAR-Sensors nicht unterscheiden kann.
+Während der Optimierung stehen dem Agent jedoch die Sensordaten der letzten 3 Zeitschritte
+zur Verfügung, sodass sehr wohl die Dynamiken der Fußgänger extrahiert werden können und
+folglich eine höhere Bestrafung für Kollisionen mit Personenschäden durchaus sinnvoll erscheint.
+
+\subsubsection{Optimierung der Simulationseinstellungen}
+Sinnvolle Parameter für die Optimierung der Simulationsumgebung betreffen vor allem
+die Sensorik, die dem Agent während des Trainings zu Verfügung steht. Dies umfasst
+die Anzahl der gemessenen LiDAR-Strahlen, die Anzahl der zu Verfügung stehenden
+Zeitschritte, sowie die Präsenz der Peilung des nächsten Ziels. Zusätzlich kann die zwischen
+den Zeitschritten vergangene, simulierte Zeit $\Delta t$ bezüglich der Aktionsrate
+des Fahragenten gewählt werden. Folgende Tabelle \label{tab:OptSimEnv} gibt die
+möglichen Parametrisierungen je Parameter an.\\
+
+\begin{table}[h]
+  \centering
+\begin{tabularx}{0.8\textwidth} { 
+  | >{\raggedright\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\raggedleft\arraybackslash}X | }
+ \hline
+ Anzahl LiDAR-Strahlen & \{ 144, 176, 208, 272 \} \\
+ \hline
+ Anzahl Stacked Steps & \{ 1, 2, 3, 4, 5 \} \\
+ \hline
+ Peilung nächstes Ziel & \{ ja, nein \} \\
+ \hline
+ Simulationsschritt $\Delta t$ & [ 0.1, 0.2, 0.3, 0.4 ] \\
+ \hline
+\end{tabularx}\\
+\caption{Zu optimierende Parameter der Simulationsumgebung}
+\label{tab:OptSimEnv}
+\end{table}
+
+Da eine entsprechende Versuchsreihe mehr als eine Woche gedauert hätte, kann die
+Optimierung der Simulationseinstellungen nicht mehr rechtzeitig fertiggestellt werden.
+Es wäre jedoch interessant zu erfahren, ob die gewählten Simulationseinstellungen
+während der Lernexperimente bereits optimal sind.
+
+\subsection{Effizienzsteigerung durch Modellbasiertes Lernen}
+Einen weiteren Ansatz zur Steigerung der Trainingsdateneffizienz stellt eine Anwendung
+des Modellbasierten Lernens aus Abschnitt \ref{sec:ModelbasedLearning} dar. In den Dreamer
+Veröffentlichungen werden Beschleunigungen der Trainingszeiten um 2-3 Magnituden in Aussicht
+gestellt, was die damit verbundenen Anstrengungen durchaus motiviert. Die folgenden
+Experimente und deren Ergebnisse liegen im Appendix als Jupyter Notebooks bereit.\\
+
+Zur Anwendung von Dreamer auf \emph{RobotSF} wird zunächst versucht, die Atari-Spiele
+Pong und MsPacman nachzustellen, um anschließend die Erkenntnisse auf \emph{RobotSF}
+zu übertragen. Hierfür dient die Dreamer-Architektur (Version 2) \cite{hafner2022dreamerv2}
+als Vorlage. Jedoch zeigt sich schnell, dass mit den zur Verfügung stehenden Rechenkapazitäten
+keine Ergebnisse innerhalb einer vertretbaren Zeit zu erwarten sind. Als Grund für
+die Fehlschläge wird die Umsetzung des VAE identifiziert, die die Ausgabe des Encoders
+mit den Dynamiken vorheriger Standbilder konkateniert und anschließend die kategorische
+Repräsentation per Softmax Aktivierung und Straight-Through Gradients
+\cite{bengio2013estimating} vorhersagt. Anhand der Rekonstruktion der Standbilder mit
+dem Decoder zeigt sich, dass nach mehr als einem Tag Trainingszeit keinerlei Informationen
+über die in den Standbildern wahrnehmbaren, beweglichen Objekte vorhanden sind. Dies kann
+auch durch einen viel zu hohen Rekonstruktionsfehler gemessen werden.\\
+
+Es wird daher auf einen Vector-Quantized Variational Autoencoder (VQ-VAE) \cite{oord2018vqvae}
+zurückgegriffen, der sich dem Konzept der Vektorquantisierung aus der Physik bedient.
+Der VQ-VAE lernt eine Embedding-Tabelle mit quantisierten Vektoren und ersetzt die einzelnen
+Teilvektoren der Ausgabe des Encoders durch den ähnlichsten Vektor aus der Embedding-Tabelle.
+Anhand der Indizes der gewählten Vektoren aus der Tabelle ergeben sich automatisch
+die Kategorien der latenten Repräsentation. Durch den Einsatz von Straight-Through Gradients
+und dem Codebook Loss wird der eigentlich nicht differenzierbare Quantisierungsschritt
+dennoch differenzierbar und somit kompatibel zur Backpropagation mit Neuronalen Netzen.
+Folgende Experimente ergeben, dass der VQ-VAE innerhalb weniger Stunden eine brauchbare,
+latente Repräsentation erlernt.\\
+
+Jedoch liefert die Dreamer-Architektur nach der Integration des VQ-VAE weiterhin unbrauchbare
+Ergebnisse. Ursache hierfür ist das Hinzufügen
+der Dynamiken mit anschließender Verarbeitung durch eine vollvermaschte Neuronenschicht,
+da der VQ-VAE nur gut funktioniert, wenn er die unveränderte Ausgabe des Encoders als
+Eingabe in die latente Vektorquantisierung erhält. Das Konkatenieren der Dynamiken hat keinen
+Einfluss, was experimentell durch Hinzufügen von Rauschen statt echter Dynamiken gezeigt
+werden kann. Die Architektur wird daher entsprechend umgestaltet, indem ein nicht
+adaptierter VQ-VAE latente Repräsentationen von Standbildern lernt. Anschließend werden
+die mittels Encoder gewonnenen, latenten Repräsentationen als Trainingsdaten für das
+Dynamikmodell verwendet. Vorteil dieser Architektur ist, dass eine gesonderte Validierung
+der einzelnen Komponenten möglich ist, um die Fehlersuche zu erleichtern. Nun kann ein
+bereits vortrainierter VQ-VAE verwendet werden, um anschließend das Dynamikmodell
+zu trainieren. Es zeigt sich, dass die verwendete GRU-Zelle des Dynamikmodells als
+Schwachstelle ausgeschlossen werden kann, da die Zustandsübergänge zwischen den latenten
+Repräsentationen mit über 99\% Genauigkeit innerhalb von wenigen Minuten erlernbar sind.
+Die damit generierten Videosequenzen, sog. Träume, weisen jedoch nur eine sehr niedrige
+Qualität auf, was vermutlich auf die Qualität der Repräsentationen zurückzuführen ist.\\
+
+Sofern es gelingt, einen brauchbaren VQ-VAE zu trainieren, könnte die Anwendung der
+Dreamer-Architektur auf \emph{RobotSF} vielversprechende Ergebnisse liefern. Die Rede
+ist von Effizienzsteigerungen um 2-3 Magnituden. Da gerade die Stärke von Dreamer darin
+besteht, aus Zeitreihen hochdimensionaler Sensordaten zu lernen, könnte eine Übertragung
+der Ergebnisse von \emph{RobotSF} auf deutlich rechenintensivere, fotorealistische
+Simulationsumgebungen wie beispielsweise CARLA ein Training innerhalb vertretbarer
+Wartezeiten ermöglichen. Sobald gute Repräsentations- und Dynamikmodelle von der
+Simulationsumgebung existieren, kann mittels aufgezeichneter Startsequenzen aus dem echten
+Simulator beispielsweise eine szenarienbasierte Falsifizierung von Fahragenten effizient
+umgesetzt werden.

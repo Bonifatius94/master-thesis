@@ -1,0 +1,297 @@
+
+\section{Diskussion der Konzeption}
+Im folgenden Abschnitt werden die Vor- und Nachteile der Ansätze \emph{RobotSF} und
+\emph{Multi-Robot} diskutiert. Anschließend wird ein Konzept für die Umsetzung der
+Trainingsumgebung entwickelt, in der später die Trainingsläufe durchgeführt werden sollen.
+Für die Diskussion werden jeweils die Veröffentlichungen Caruso et. al \cite{machines11020268}
+für \emph{RobotSF} und Fan et. al \cite{fan2020distributed} bzw. Shunyi et. al
+\cite{Shunyi2020multirobot2} für \emph{Multi-Robot} herangezogen. Zudem dient Kiran et. al
+\cite{Kiran2022survey} als Überblick, um weitere, populäre Ansätze zusammenzufassen.
+
+\subsection{Umsetzung dynamischer Hindernisse}
+Der entscheidendste Unterschied zwischen den \emph{Multi-Robot} und \emph{RobotSF} Ansätzen
+besteht in der Modellierung dynamischer Hindernisse. Das Konzept von \emph{Multi-Robot} sieht
+hierzu vor, die dynamischen Hindernisse in Form von vielen autonomen Fahrzeugen umzusetzen.
+Hingegen implementiert \emph{RobotSF} dynamische Hindernisse anhand von Fußgängern, die mit
+dem Social Force Modells gesteuert werden.\\
+
+Da diese Arbeit die Interaktion zwischen dem Fahrzeug und Fußgängern auf Gehwegen und in
+Fußgänerzonen thematisiert, passt der Ansatz von \emph{RobotSF} deutlich besser.
+Eine Kombination der beiden Ansätze wäre jedoch möglich. Es wird entschieden, zunächst Fußgänger
+durch Social Force umzusetzen und erst zu einem späteren Zeitpunkt die Simulationsumgebung
+um mehrere autonome Fahrzeuge zu erweitern.
+
+\subsection{Modellierung des Kartenmaterials}
+Zur Modellierung der simulierten Entitäten in Form des Fahrzeugs, der Fußgängern und
+der statischen Hindernisse kommen zwei Ansätze aus der Grafikprogrammierung infrage.
+Die Entitäten können zum einen durch Vektorgrafiken repräsentiert werden. Zum anderen
+ist es auch möglich, die Karte in eine Rasterstruktur einzuteilen und die entsprechenden
+Entitäten durch Occupancy Grids darzustellen.\\
+
+Diese Arbeit strebt eine Validierung des Fahrzeugs auf dem virtuellen Campus der Universität
+Augsburg an. Occupancy Grids sind aufgrund der festen Rastergröße nur schlecht skalierbar
+und können daher nur sehr bedingt große Karten darstellen. Außerdem liegen die Entitäten
+bei populären Implementierungen des Social Force Modells wie beispielsweise PySocialForce
+\cite{gao2020pysf} ohnehin in Form von Vektorgrafiken vor. Anhand des auf GitHub veröffentlichten
+Quelltexts \cite{robotsf2022github} des \emph{RobotSF} Ansatzes ist ersichtlich,
+dass hier PySocialForce verwendet wird, jedoch in Kombination mit Occupancy Grids.
+Dies erscheint sehr umständlich zu sein, da zu jedem Simulationsschritt zwischen den
+Repräsentationen als Vektorgrafiken und Occupancy Grids konvertiert werden muss.\\
+
+Es wird daher entschieden, die Umsetzung von \emph{RobotSF} als Basis zu verwenden,
+aber die Repräsentation der Entitäten auf Vektorgrafiken umzustellen. Die Fahrzeuge und
+Fußgänger werden als Kreise dargestellt. Hindernisse entsprechen jeweils einem aus
+einzelnen Linien zusammengesetzten Polygon. Da diese Repräsentation der Umsetzung aus
+PySocialForce entspricht, wird dessen Schnittstelle zum Simulator deutlich vereinfacht.
+Das entsprechende Kartenmaterial wird von OpenStreetMap importiert, sodass die Gebäudeumrisse
+als Hindernisse dienen. Anschließend wird die Karte um dynamische Hindernisse in Form
+der Fußgänger ergänzt.
+
+\subsection{Umsetzung der simulierten Fahrzeuge}
+Bei der Simulation von Mikromobilitätsfahrzeugen kommt häufig die Differential Drive
+Kinematik zum Einsatz. Eine weitere, sehr einfache Kinematik stellt das Fahrradmodell dar.
+Alle Umsetzungen von \emph{RobotSF} als auch von \emph{Multi-Robot} verwenden übereinstimmend
+die Differential Drive Kinematik. Dies liegt daran, dass jeweils ein kleiner allradgetriebener
+Roboter in der Realität erprobt wird, der eine entsprechende Kinematik aufweist.\\
+
+Um aber beispielsweise auch Fahrzeugtypen wie einen E-Scooter adäquat modellieren zu können,
+scheint das kinematische Fahrradmodell eine sinnvolle Alternative darzustellen. Folglich wird
+entschieden, sowohl das Differential Drive Modell, als auch das kinematische Fahrradmodell umzusetzen.
+Außerdem soll die Schnittstelle zwischen Fahrzeug und Simulator für die Unterstützung weiterer
+Fahrzeugkinematiken offen gehalten werden, um eine möglichst große Bandbreite an Fahrzeugen
+zu unterstützen. Die Implementierung von \emph{RobotSF} für Differential Drive wird übernommen.
+Für das kinematische Fahrradmodell dient der auf GitHub veröffentlichte Quelltext von
+Winston H. \cite{bicycle2023github} als Vorlage.
+
+\subsection{Umsetzung der Fahrsoftware}
+Für die Umsetzung der Steuersoftware hinsichtlich der Lokalen Navigation müssen alle
+Aufgaben, die sonst ein menschlicher Fahrer ausführt, durch die Software übernommen werden.
+Dies umfasst unter anderem die Steuerung des Fahrzeugs, indem beschleunigt, gebremst und
+gelenkt wird. Hierfür muss die Software den Lenkwinkel und die Beschleunigung mehrmals pro
+Sekunde vorgeben. In die Bestimmung dieser beiden Stellgrößen geht eine Vielzahl an Informationen
+ein, die teilweise aus hochdimensionalen Sensordaten extrahiert und anschließend entsprechend
+verarbeitet werden müssen. Beispielsweise beobachtet die Fahrsoftware die Positionen und
+Dynamiken anderer Verkehrsteilnehmer mittels Kameras und/oder LiDAR-Sensoren, um Kollisionen
+zu vermeiden. Außerdem sind für die Einhaltung der Verkehrsregeln eine Fülle an weiteren
+Informationen wie beispielsweise die Positionen und Phasen von Ampeln oder die Erkennung
+von Verkehrsschildern erforderlich.\\
+
+Für einige Teilaufgaben des Autonomen Fahrens gibt es bewährte Lösungen, wie die Lenkung
+per Stanley-Controller oder die Geschwindigkeitskontrolle mittels PID-Controller,
+welche jedoch oftmals bei schneller Fahrt oder Notbremsungen an ihre Grenzen kommen.
+Die Wahrnehmung der Umgebung wird typischerweise mit Neuronalen Faltungsnetzen
+(engl. Convolutional Neural Networks, CNN) gelöst. Da sich die nicht-lineare
+Funktionsapproximation mittels Neuronaler Netze sehr gut für die Auswertung hochdimensionaler
+Sensordaten und die Vorhersage komplexer Stellgrößen eignet, ist es naheliegend, auch die
+restlichen Aufgaben mittels Neuronaler Netze umzusetzen. Dies wird auch übereinstimmend
+von allen betrachteten Implementierungen der Ansätze \emph{RobotSF} und \emph{Multi-Robot}
+bestätigt, die ihre Fahrsoftware als Neuronale Netze repräsentieren und per Deep
+Reinforcement Learning trainieren. Es wird daher entschieden, die Fahrsoftware mittels
+Tiefer Neuronaler Netze umzusetzen.
+
+\subsection{Umsetzung der Sensorik}
+Als Fahrzeugsensorik benötigt der Agent sowohl eine Zielpeilung, als auch eine Wahrnehmung
+seiner Umgebung. Außerdem muss er für die Steuerung des Fahrzeugs dessen aktuelle Dynamik
+kennen. Als Zielpeilung dient meist die relative Zieldistanz und der Winkel zum Ziel.
+Für die Wahrnehmung kommen hauptsächlich Kameras und/oder LiDAR-Sensoren infrage.
+Da es sich bei der Mikromobilität oft um kleine Fahrzeuge handelt, für deren Umsetzung
+hochwertige Kameras viel teuer und fehleranfälliger wären, werden typischerweise
+nur LiDAR-Sensoren eingesetzt.\\
+
+Eine Umsetzung der Wahrnehmung durch einen LiDAR-Sensor ist auch übereinstimmend mit allen
+betrachteten Ansätzen bezüglich \emph{RobotSF} und \emph{Multi-Robot}. Vermutlich liegt
+dies daran, dass eine entsprechende Simulationsumgebung deutlich leichter umzusetzen ist,
+da keine hochauflösenden Grafiken berechnet werden müssen, wie es andernfalls für Kameras
+notwendig wäre. Bezüglich der Zielpeilung werden auch ähnliche Ansätze mit relativen
+Zieldistanzen und -winkeln gewählt.\\
+
+Es wird daher entschieden, die Sensorik für die Wahrnehmung mit einem LiDAR-Sensor
+und die Zielpeilung durch eine relative Zieldistanz und den relativen Winkel zum Ziel
+umzusetzen. Die Dynamik des Fahrzeugs entspricht der vom kinematischen Fahrzeugmodell
+bereitgestellten Sensorik und wird dort gekapselt.
+
+\subsection{Umsetzung der Navigation und Fußgängersteuerung}
+Nach einer Begutachtung von \emph{RobotSF} wird klar, dass die dort vorgesehene Navigation
+des Fahrzeugs die Problemstellung deutlich erschwert, da die Route lediglich aus Start-
+und Endpunkten besteht, die zufällig auf der Karte positioniert werden. Wenn die Punkte
+am anderen Ende der Karte hinter möglichen Hindernissen liegen, können sehr schwierige
+Szenarien entstehen. Moderne, kartengestützte Navigationsgeräte zur Globalen Navigation
+können deutlich kleinteiliger interpolierte Routen mit vielen Wegpunkten vorgeben.
+Eine Vorgabe der Route anhand von vielen Wegpunkten scheint daher sinnvoll, um die
+Komplexität bei der Lokalen Navigation durch die Fahrsoftware zu senken.\\
+
+Die Umsetzung von \emph{RobotSF} bei der Steuerung von Fußgängern weist außerdem
+erhebliche Schwächen auf. Ähnlich wie bei der Vorgabe der Routen für das Fahrzeug werden
+auch hier zufällige Start- und Zielpunkte auf der Karte gewählt. Dies führt jedoch
+zu Problemen, da sich mittels Social Force gesteuerte Fußgänger immer nur geradlinig
+auf ihr Ziel zu bewegen und daher nicht um größere Hindernisse wie beispielsweise Gebäude
+herummanövrieren können. Um ein typisches Fußgängerverhalten auf Gehwegen zu erzielen,
+müssen auch hier Routen anhand von mehreren Wegpunkten vorgegeben werden, damit die Fußgänger
+Stecken laufen können, die Kurven enthalten. Das bisherige Fußgängerverhalten kann
+beibehalten werden, um Fußgängerzonen zu modellieren. Der entsprechende Bereich soll jedoch
+durch eine feste Zone beschränkt werden, um die eingangs geschilderte Problematik von
+Social Force mit großen Hindernissen zu vermeiden.\\
+
+Da die bisherige Fußgängersteuerung keine Fußgängerzonen und -routen vorsieht, wird entschieden,
+die Implementierung von \emph{RobotSF} entsprechend zu überarbeiten. Auch die Gruppierungslogik
+der Fußgänger wird gemäß Moussaïd et. al \cite{moussaid2010groupssf} angepasst.
+Zudem wird die Navigationsaufgabe des Fahrzeugs ebenfalls durch aus mehreren Wegpunkten
+bestehenden Routen vereinfacht.
+
+\subsection{Auswahl der Lernverfahren}
+Als Lernverfahren kann entweder eine Belohnungsfunktionen $Q\phi$ bzw. $V\phi$ oder
+eine Strategie $\pi_\theta$ mittels Bestärkendem Lernen approximiert werden.
+Da es sich beim Steuern eines Fahrzeugs um ein kontinuierliches Kontrollproblem handelt,
+werden entsprechende Aufgaben typischerweise mit einer stochastischen Strategie umgesetzt.
+In allen betrachteten Ansätzen kommen deshalb Varianten der Policy Gradient Methoden
+in Form von A3C bzw. PPO zum Einsatz. Dies ist hauptsächlich durch die bessere Skalierbarkeit
+mit Rechenressourcen zu begründen. Caruso et. al \cite{machines11020268} testet zusätzlich
+einen Ansatz mit DQN, der jedoch in allen Kategorien deutlich schlechter als die mit A3C
+erlernte Strategie abschneidet.\\
+
+Hinsichtlich der Trainingsdateneffizienz sind für gewöhnlich Verfahren wie DDPG und SAC
+\cite{Kiran2022survey} vorzuziehen, da diese das Modell bereits während dem Sammeln der
+Trainingsdaten aktualisieren und gesammelte Erfahrungen vielmals durch ein Prioritized
+Replay Memory für Modellaktualisierungen wiederverwenden. Aufgrund der besseren Eignung
+für den konkreten Anwendungsfall des Autonomen Fahrens und der Beiträge von PPO zur
+Steigerung der Trainingsdateneffizienz und Stabilität kann es dennoch sinnvoll sein,
+Policy Gradient Methoden heranzuziehen. Dies ist insbesondere der Fall, wenn die
+Simulationsumgebung nicht zu rechenintensiv ist und entsprechende Rechenressourcen vorliegen,
+um die Skalierbarkeit moderner Hardware auszunutzen.
+Für Policy Gradient Methoden spricht außerdem, dass eine
+Strategie statt einer Schätzung der Belohnungsfunktion gelernt wird, wodurch Unsicherheiten
+bezüglich der gewählten Aktionen ausgedrückt werden können. Dies kann unter anderem bei der
+Falsifizierung trainierter Fahragenten sehr nützlich sein, um Schwachstellen der Fahrsoftware
+zu ermitteln und anschließend zu beheben.\\
+
+Es wird deshalb der Entschluss gefasst, eine Strategie mithilfe von Policy Gradient
+Methoden zu erlernen. Als konkrete Algorithmen werden PPO und A3C näher in Betracht gezogen.
+Wie bereits in Abschnitt \ref{sec:ppo} angedeutet, ist PPO eine Weiterentwicklung von A3C
+und trainiert deutlich stabiler und effizienter mit den gesammelten Trainingsdaten,
+da mehrere Lernschritte auf denselben Daten durchführbar sind. Es wird daher PPO
+als Lernverfahren gewählt.
+
+\subsection{Umsetzung der Modellstruktur}
+Bei der Umsetzung einer Lokalen Navigation auf Basis von Neuronalen Netzen mittels
+LiDAR-Sensorik kommen typischerweise Neuronale Faltungsnetze, gefolgt von einigen
+vollvermaschten Neuronenschichten zum Einsatz. Um Bewegungen abzubilden, werden die
+Standbilder mehrerer aufeinanderfolgender Zeitschritte zusammengefügt.\\
+
+Der Fahragent wird durch ein Neuronales Netz modelliert, dessen Actor- und Critic-
+Komponente jeweils aus zwei vollvermaschten Schichten mit 64 Neuronen bestehen.
+Der Actor repräsentiert die Policy, die pro Aktuator einen Mittelwert und eine
+Standardabweichung vorhersagt, womit normalverteilte Zufallswerte gezogen werden.
+Hingegen schätzt der Critic die Grundbelohnung (Baseline) des aktuellen Zustands,
+was einer Regression mit einem einzigen Ausgabeneuron entspricht.
+Als Eingabe erhalten Actor und Critic den von den Sensoren gelieferten, aktuell
+beobachtbaren Systemzustand, der aus der Dynamik des Fahrzeugs, der Zielpeilung
+und den vom Strahlensensor gemessenen Abständen zu Hindernissen besteht. Um Hindernisse
+besser erkennen zu können, werden nebeneinander liegende Strahlen per 1D Faltung
+zu aussagekräftigeren Mustern zusammengefasst. Die jeweiligen
+Zeitschritte werden mithilfe der Eingabekanäle repräsentiert.
+Alternativ können auch 2D Faltungen zum Einsatz kommen, sodass die Faltungskerne
+zeitschrittübergreifende Muster abtasten, was jedoch aufgrund der kleinen Anzahl
+an Zeitschritten verworfen wird, da es keinen Vorteil gegenüber 1D Faltungen bietet.
+Auch die Fahrdynamiken und Zielpeilungen werden für mehrere Zeitschritte geliefert
+und per Flatten-Schicht zu einem flachen Eingabevektor verarbeitet, der mit den flachen,
+vorverarbeiteten Strahlendaten konkateniert wird.\\
+
+Eine entsprechende
+Vorverarbeitung der Strahlendaten erfolgt in einem sog. Feature Extractor, der aus
+4 Faltungsschichten besteht, jeweils gefolgt von einer Rectified Layer Unit (ReLU)
+Aktivierung und einer Dropout-Schicht, um Überanpassungen zu vermeiden.
+Da die vollvermaschten Neuronenschichten von Actor und Critic flache Feature-Vektoren
+erwarten, enthält der Feature Extractor eine abschließende Flatten-Schicht.
+Um die Eingabedimensionen darauffolgender Schichten zu reduzieren, werden im Feature
+Extractor jeweils die Ausgabedimensionen bezüglich der Eingabedimensionen der Faltungen
+halbiert. Dies erfordert, dass die Anzahl der vom LiDAR-Sensor gemessenen Strahlen
+durch 16 teilbar ist. Als Anzahl der Filter wird für die ersten beiden Faltungen 64
+und für die letzten beiden Faltungen 16 gewählt. Die Faltungskerne weisen eine Größe
+von 3 auf.\\
+
+Sehr ähnliche Umsetzungen der Modellstruktur kommen auch in den Ansätzen von
+\emph{RobotSF} und \emph{Multi-Robot} jeweils zum Einsatz. Die exakten Modellstrukturen
+weichen dabei etwas voneinander ab, haben aber gemeinsam, dass das Modell die LiDAR-Daten
+per Feature Extractor in Form einiger Faltungsschichten vorverarbeitet und anschließend
+die Actor- und Critic-Komponente durch vollvermaschte Neuronenschichten repräsentiert.
+Da Fan et. al \cite{fan2020distributed} das Fahrverhalten aus einer offensiven und
+defensiven Strategie zusammensetzt, wird ein defensives Modell ohne Feature Extractor
+konzipiert, das nur Standbilder sieht. Dem offensiven Modell wird hingegen ein Feature
+Extractor bereitgestellt, der die Sensordaten mehrerer Zeitschritte als Eingabe erhält.
+
+\subsection{Auswahl der Belohnungsstruktur} \label{sec:Reward}
+Da der Agent das Ziel verfolgt, die während des Trainings erhaltenen Belohnungen
+zu maximieren, kommt der Wahl der Belohnungsstruktur eine zentrale Rolle zu,
+um die erlernten Fahrverhaltensweisen zu steuern.\\
+
+Die Umsetzung der Belohnungsstruktur von \emph{RobotSF} sieht eine große, punktuelle
+Belohnung für das Erreichen des Ziels vor. Außerdem erhält der Agent häufige, kleine
+Belohnungen entsprechend der Distanzverkürzung zum Ziel, um Annäherungen an das Ziel
+anzuregen. Des weiteren wird eine Strafe vergeben, wenn sich innerhalb eines der 8
+gleichmäßig um den Agent angeordneten Sektoren Fußgänger befinden. Die Bestrafung
+wird pro Sektor bestimmt und wächst gemäß der sinkenden Distanz zum nächstgelegenen
+Fußgänger im Sektor. Dadurch soll erzwungen werden, dass der Agent einen Mindestabstand
+zu Fußgängern einhält. Zudem wird der Agent bestraft, wenn er eine Kollision mit
+Fußgängern oder statischen Hindernissen verursacht. Bei der von Fan et. al
+\cite{fan2020distributed} beschriebenen Umsetzung von \emph{Multi-Robot} gibt es
+ebenfalls eine Belohnung für das Erreichen des Ziels und eine Bestrafung für Kollisionen
+mit statischen und dynamischen Hindernissen. Außerdem werden auch schon beinahe
+aufgetretene Kollisionen gemäß der Distanz zwischen Fahrzeug und Hindernis bestraft.
+Um eine Annäherung an das Ziel anzuregen wird statt einer Belohnung für Annäherungen
+eine Bestrafung für die Vergrößerung der Zieldistanz vergeben.\\
+
+Die aus den beiden Ansätzen resultierenden Belohnungssignale sind recht komplex und
+teilweise nur schwer für den Agent anhand der ihm zur Verfügung stehenden Sensordaten
+interpretierbar. Werden die Terme der Belohnungsstruktur falsch gewichtet, kann dies
+schnell zu starken Fehlanreizen führen.
+Um zu beweisen, dass geeignetes Fahrverhalten bereits mit einer sehr einfachen
+Belohnungsstruktur erzielbar ist, wird eine eigene Belohnungsfunktion folgendermaßen
+definiert: Der Agent erhält eine Belohnung von 1 für das Erreichen des Ziels, eine
+Bestrafung von -2 für eine Kollision mit einem Fußgänger oder einem Hindernis und
+zusätzlich eine insgesamt über die einzelnen Simulationsschritte verteilte, sehr kleine
+Bestrafung von -0.1, die dazu anregen soll, möglichst schnell das Ziel zu erreichen.
+
+\begin{equation}
+\begin{aligned}
+r(s_t) = \frac{-0.1}{\text{max\_steps}} + \begin{cases}
+1 & , \text{reached\_waypoint}(s_t) \\
+-2 & , \text{is\_collision}(s_t) \\
+0 & , \text{else}
+\end{cases}
+\end{aligned}
+\end{equation}
+
+Die Bestrafung für Kollisionen wird bewusst gleich für Fußgänger und Hindernisse gewählt,
+da eine Unterscheidung aus den LiDAR-Daten eines Standbilds für den defensiven Agent kaum
+möglich ist und außerdem dazu anregen würde, die im Kartenmaterial vorkommenden Hindernisumrisse
+ggf. auswendig zu lernen. Beim offensiven Agent kann eine Unterscheidung zwischen Fußgängern
+und statischen Hindernissen sinnvoll sein, da ihm die Sensordaten mehrerer Zeitschritte
+zur Verfügung stehen, woraus die Bewegungsdynamiken der Fußgänger ersichtlich sind.
+Um eine aus mehreren Wegpunkten zusammengesetzte Route fahren
+zu können, entspricht das Anfahren jedes einzelnen Wegpunkts einer neuen Episode. Da bei
+der Erstellung der Routen darauf geachtet wird, dass sich die ersten Wegpunkte nah beim
+Startpunkt des Fahrzeugs befinden und anhand der Positionierung der Fußgänger keine
+Interaktion zu erwarten ist, entfällt die Notwendigkeit einer Belohnung für Zielannäherungen.
+Aufgrund der Funktionsweise von Advantage Actor-Critic Methoden wie PPO ist ein exaktes Erlernen
+einer komplexen Belohnungsstruktur nicht erforderlich. Es genügt eine ungefähre Schätzung
+des Advantage mit korrektem Vorzeichen, damit die Wahrscheinlichkeiten zur Auswahl von
+Aktionen mit der Zeit entsprechend erhöht bzw. gesenkt werden.
+
+\subsection{Wahl der Evaluationsmetriken} \label{sec:EvalMetrics}
+Um die Qualität der trainierten Fahragenten zu bestimmen, werden in Anlehnung an den
+\emph{RobotSF} Ansatz von Caruso et. al \cite{machines11020268} dieselben Unfallmetriken
+gewählt, um später eine Vergleichbarkeit der Ergebnisse herzustellen.\\
+
+Die Unfallmetriken messen die relativen Häufigkeiten, wie oft eine Route von Anfang bis
+Ende unfallfrei gefahren wird bzw. wie häufig Unfälle mit Fußgängern oder Hindernissen
+auftreten. Es findet eine Unterscheidung in 4 disjunkte Kategorien statt.
+Unfallfrei bis zum Ende gefahrene Routen werden mit der \emph{Route Completion Rate}
+gemessen. Hingegen messen die \emph{Pedestrian Collision Rate} und \emph{Obstacle
+Collision Rate} Unfälle mit Fußgängern bzw. stationären Hindernissen. In allen weiteren
+Fällen tritt zwar kein Unfall auf, aber der Agent findet auch nicht innerhalb der dafür
+vorgesehenen Simulationszeit ans Ziel der Route, was mit der \emph{Timeout Rate}
+bemessen wird.\\
+
+Weitere Veröffentlichungen bezüglich des \emph{Mulit-Robot} Ansatzes verwenden
+lediglich eine sog. \emph{Success Rate} für zu Ende gefahrene Routen, was in den
+Unfallmetriken bereits enthalten ist.

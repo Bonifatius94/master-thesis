@@ -1,0 +1,61 @@
+
+\cleardoublepage
+\chapter{Einleitung}\label{ch:Einleitung}
+
+Aufgrund der um mehrere Magnituden potenteren Rechenkapazitäten moderner Hardware
+finden Tiefe Neuronale Netze in vielerlei Gebieten des täglichen Lebens breite
+Anwendung. Unter anderem werden Neuronale Netze in der Bild- und Spracherkennung
+und beim Übersetzen und Generieren von Texten und Bildern eingesetzt.
+Auch für komplexe Aufgaben der Mess- und Regelungstechnik wie z.B. die autonome
+Steuerung von Fahrzeugen sind Neuronale Netze hervorragend geeignet. Mithilfe von
+Methoden des Bestärkenden Lernens (engl. Reinforcement Learning) können interessante
+Verhaltensweisen in Simulationen erlernt und anschließend in der Realität erprobt werden.
+Für die autonome Fortbewegung der Zukunft ist neben klassischen Automobilen vor allem
+die Mikromobilitätsklasse mit E-Scootern oder kleinen Lieferrobotern aufgrund ihrer
+vielseitigen Anwendungsmöglichkeiten interessant. Wegen der anspruchsvollen Interaktion
+mit Fußgängern ist aktuell das Fahren von E-Scootern in Fußgängerzonen und auf Gehwegen laut
+StVO verboten \cite{ekfv2019}. Da jedoch auf vielen Werksgeländen und in der Lagerlogistik
+sehr wohl autonome Fahrzeuge in fußgängerbelebten Zonen zum Einsatz kommen \cite{ivm2019},
+scheint eine breite Erprobung von Mikromobilitätsfahrzeugen in Fußgängerzonen und auf
+Gehwegen nur eine Frage der Zeit zu sein. Die Entwicklung autonomer Fahrsoftware kann
+die sichere Nutzung von Mikromobilität entscheidend vorantreiben.\\
+
+Um die Herangehensweise an die Entwicklung autonomer Fahrsoftware besser zu verstehen,
+muss zunächst das Gebiet das Autonomen Fahrens näher betrachtet werden. Es handelt sich
+im Wesentlichen um die beiden Aufgabenbereiche der Lokalen bzw. Globalen Navigation.
+Hierbei entspricht die Globale Navigation einem Routenplaner wie beispielsweise einem
+Navigationsgerät, das kürzeste Wege vom aktuellen Standpunkt zum Zielort berechnet.
+Hingegen fallen in den Aufgabenbereich der Lokalen Navigation alle Vorgänge, die sonst
+ein menschlicher Fahrer übernommen hätte. Eine Fahrsoftware muss demnach das Fahrzeug
+beschleunigen bzw. abbremsen und lenken. Zudem beobachtet sie die anderen Verkehrsteilnehmer
+und schätzt deren Bewegungen ein, um Kollisionen zu vermeiden. Des weiteren müssen Verkehrszeichen
+und Ampeln erkannt und hinsichtlich der Einhaltung der Verkehrsregeln interpretiert werden.
+Da die Globale Navigation anhand von Kartenmaterial bereits sehr gut erforscht ist und
+effiziente Navigationsalgorithmen zum Finden kürzester Wege z.B. in Form von Heuristiken
+wie dem A* Algorithmus zur Verfügung stehen, ist vor allem das Feld der Lokalen
+Navigation mit Neuronalen Netzen zur Verarbeitung hochdimensionaler Sensordaten
+interessant.\\
+
+Zur Entwicklung autonomer Fahrsoftware existieren bereits zahlreiche Forschungsprojekte,
+unter anderem die Ansätze \emph{RobotSF} \cite{machines11020268} und \emph{Multi-Robot}
+\cite{fan2020distributed}, \cite{Shunyi2020multirobot2}. Vor allem \emph{RobotSF} ist
+interessant, da bei diesem Ansatz Fußgänger durch das Social Force Modell
+\cite{helbig1995socialforce}, \cite{moussaid2010groupssf} gesteuert werden und mit einem
+steuerbaren Fahrzeug interagieren. Aufgrund der unakzeptabel hohen Kollisionsraten mit
+Fußgängern von 13\% bei niedriger und 47\% bei hoher Verkehrsdichte ist der Ansatz jedoch noch
+stark verbesserungsfähig. Daher wurde zu Beginn dieser Arbeit der Austausch mit den Forschern
+aus Triest gesucht, die hinter der Entwicklung von \emph{RobotSF} stehen. Es wurde berichtet,
+dass die Lernexperimente vermutlich noch Fortschritte gezeigt hätten, aber aufgrund der sehr
+langen Trainingszeiten von teilweise über einem Monat kaum durchführbar waren und vorzeitig
+abgebrochen werden mussten. Um das Experimentieren mit möglichst vielen Ansätzen im Rahmen
+dieser und folgender Arbeiten zu ermöglichen, konzentriert sich diese Arbeit neben der
+Verbesserung der Verkehrssicherheit deshalb auch auf die Verbesserung der Effizienz der
+Simulationsumgebung. Dies umfasst sowohl die Optimierung der Simulationsberechnungen als
+auch den Einsatz effektiverer Trainingsverfahren wie Proximal Policy Optimization
+\cite{schulman2018ppo}. Dadurch sind schon nach Simulations- bzw. Trainingszeiten
+von wenigen Stunden sehr gute Ergebnisse erwartbar.\\
+
+Es soll zunächst die effiziente Erlernbarkeit sicherer Fahrverhaltensweisen bezüglich
+der Lokalen Navigation von Mikromobilitätsfahrzeugen mittels Reinforcement Learning
+demonstriert werden. Anschließend wird die Qualität der erlernten Verhaltensweisen anhand
+von geeigneten Unfallmetriken evaluiert und mit ähnlichen Arbeiten verglichen.

@@ -1,0 +1,22 @@
+\chapter*{Kurzfassung}
+
+Diese Arbeit zeigt, wie Mikromobilitätsfahrzeuge, z.B. E-Scooter, die sichere Navigation
+durch belebte Zonen mittels autonomer Fahrsoftware erlernen können. Da entsprechende
+Fahrzeuge unter anderem auf dem Gehweg oder in Fußgängerzonen unterwegs sind, wird
+zunächst eine geeignete Simulationsumgebung für die Interaktion zwischen Fahrzeug und
+Fußgängern anhand des Social Force Modells entwickelt. Darauf aufbauend werden
+Fahrverhaltensweisen mittels Deep Reinforcement Learning trainiert. Anhand von
+Unfallmetriken wird abschließend eine Qualitätssicherung des erlernten Fahrverhaltens
+auf Kartenmaterial des virtuellen Universitätscampus durchgeführt und ein Vergleich
+der Unfallzahlen mit ähnlichen Projekten aus der Literatur vorgenommen.\\
+
+Unter anderem kann der bestehende Ansatz \emph{RobotSF} \cite{machines11020268} um die
+Simulation von Fußgängerzonen und Gehwegen erweitert werden, wobei eine 19-fache
+Beschleunigung der für die Simulationslogik benötigten Rechenzeit erzielt wird. Durch die
+verbesserte Effizienz ist es möglich, echtes Kartenmaterial während des Trainings und
+der Evaluation zu verwenden. Zudem führen die Lernexperimente mit einer deutlich
+vereinfachten Belohnungsstruktur zu vielen, interessanten Fahrverhaltensweisen, die Kollisionen
+mit Fußgängern in dichten Menschenmengen durch das Erlernen einer defensiven Strategie komplett
+vermeiden können.
+
+\cleardoublepage

@@ -1,0 +1,47 @@
+
+\cleardoublepage
+\chapter{Analyse bestehender Ansätze}\label{ch:Research}
+
+In diesem Kapitel werden bereits existierende Ansätze zum Erlernen einer Fahrsoftware
+für Mikromobilitätsfahrzeuge beschrieben. Speziell geht es einerseits um den Ansatz
+\emph{RobotSF} \cite{machines11020268}, bei dem ein Fahrzeug mit Fußgängern interagiert,
+die per Social Force simuliert werden. Alternativ gibt es auch \emph{MultiRobot} Ansätze
+\cite{fan2020distributed}, \cite{Shunyi2020multirobot2}, die stattdessen viele
+autonome Fahrzeuge miteinander interagieren lassen, anstatt die beweglichen Hindernisse
+durch Fußgänger zu simulieren.
+
+\section{Ansätze bezüglich des Lernverfahrens}
+Gemeinsam haben die Ansätze, dass meist ein oder mehrere Roboter der Mikromobilitätsklasse
+per Deep Reinforcement Learning trainiert werden. Als Trainingsalgorithmen kommen oftmals
+Policy Gradient Methoden wie beispielsweise Asynchronous Advantage Actor-Critic (A3C) oder
+Proximal Policy Optimization (PPO) zu Einsatz, da diese gut mit Parallelität und
+Rechenressourcen skalieren. Im Fall von rechenintensiven Simulationen können auch
+Lernverfahren wie Deep Deterministic Policy Gradient (DDPG) und Soft Actor-Critic (SAC)
+interessant sein, um eine bessere Trainingsdateneffizienz zu erreichen \cite{Kiran2022survey}.
+
+\section{Ansätze bezüglich Fahrzeug und Sensorik}
+Bezüglich der verwendeten Fahrzeuge kommen verschiedenste Modelle zum Einsatz. Je nach Fahrzeug
+bietet sich eine unterschiedliche Kinematik zur Simulation an. Beispielsweise eignet sich
+das Bicycle Model, um E-Scooter zu modellieren. Für Fahrzeuge mit Allradantrieb oder Ketten
+kommt Differential Drive infrage. Fan et. al \cite{fan2020distributed} geht sogar so weit,
+einen trainierten Agent bewusst mit einer abgewandelten Kinematik zu evaluieren, um die
+Robustheit der erlernten Fahrsoftware zu testen. Als Sensorik wird in der Mikromobilität
+meist ein LiDAR-Sensor in Kombination mit einer Zielpeilung verwendet, was alle 3 betrachteten
+Veröffentlichungen gemeinsam haben.
+
+\section{Ansätze bezüglich der Simulationsumgebung}
+Für die Repräsentation der Entitäten und des Kartenmaterials bei der Simulation gibt es auch
+vielerlei Ansätze \cite{Kiran2022survey}. Unter anderem werden Entitäten mit Vektorgrafiken
+dargestellt. Ein weiterer Ansatz diskretisiert die Karte und alle Entitäten als Raster
+(engl. Occupancy Grid). Weitere Ansätze wie CALRA \cite{dosovitskiy2017carla} setzen auf
+fotorealistische Grafiken mittels optimierter Spieleframeworks wie der Unreal Engine.
+Der jeweilige Ansatz hat großen Einfluss auf die verwendeten Datenstrukturen und
+Algorithmen, um die Entitäten und Sensoren zu simulieren.
+
+\section{Ansätze bezüglich der Evaluation}
+Zur Evaluation der trainierten Modelle gibt es noch keine einheitlichen Standards
+\cite{Kiran2022survey}. Dies macht es sehr schwer, die verschiedenen Ansätze der Forscher
+fair zu vergleichen. Eine Vergleichbarkeit ist aber ohnehin kaum herstellbar, da die
+Vielfalt bezüglich Fahrzeugen und Sensorik teilweise unüberwindbare Inkompatibilitäten
+verursacht. Als Metrik werden meist Erfolgs- bzw. Unfallraten für die relative Häufigkeit
+an Zielfahrten bzw. Unfällen verwendet.

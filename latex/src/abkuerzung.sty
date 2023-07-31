@@ -1,0 +1,570 @@
+%-------------------------------------------------------------------------------%
+%-------------------------------------------------------------------------------%
+
+%-- Style_Datei ben�tigt das Paket amsmath
+\RequirePackage{amsmath}
+\RequirePackage{mathtools}
+
+%---------------------------------------
+%-- Mathematische Nomenklatur
+%---------------------------------------
+%
+
+% Trace / Spur
+\DeclareMathOperator{\Tr}{Tr}
+\DeclareMathOperator{\Sp}{Sp}
+
+%-- Norm
+\newcommand{\norm}[2]{\left\lVert#1\right\rVert_{\ensuremath{#2}}}
+
+%-- Ableitungen
+\newcommand{\partialfrac}[2] {\frac{\partial #1}{\partial #2}}
+\newcommand{\difffrac}[2]    {\frac{\text{d} #1}{\text{d} #2}}
+%-- Partielle Ableitungen
+%-- Aufruf �ber \dpart{}{} bzw- \tdpart{}{}
+\newcommand{\dpart}[2]{\ensuremath{\frac{\partial {#1}}{\partial {#2}}}}  
+\newcommand{\tdpart}[2]{\ensuremath{\tfrac{\partial {#1}}{\partial {#2}}}}  
+
+%-- Sinus und Cosinus
+\newcommand{\tcos}[1]{\text{c}_{#1}}
+\newcommand{\tsin}[1]{\text{s}_{#1}} 
+
+%--  Matrizen (Fettdruck)
+%\newcommand{\vmatrix}[1]{\ensuremath{\mathbf{#1}}}
+
+%-- Vektoren (Klein + Fettdruck)
+\renewcommand {\vec}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand {\vdot}[1]{\ensuremath{\dot{\mathbf{#1}}}}
+\newcommand {\vddot}[1]{\ensuremath{\ddot{\mathbf{#1}}}}
+\newcommand {\vhat}[1]{\ensuremath{\hat{\mathbf{#1}}}}
+\newcommand {\vtilde}[1]{\ensuremath{\tilde{\mathbf{#1}}}}
+\newcommand {\vcheck}[1]{\ensuremath{\check{\mathbf{#1}}}}
+\newcommand {\vbar}[1]{\ensuremath{\bar{\mathbf{#1}}}}
+
+%-- Vektoren (zeitabh�ngig (t)) (Klein + Fettdruck)
+\newcommand {\tvec}[1]{\ensuremath{\mathbf{#1}(t)}}
+\newcommand {\dottvec}[1]{\ensuremath{\dot{\mathbf{#1}(t)}}}
+\newcommand {\ddottvec}[1]{\ensuremath{\ddot{\mathbf{#1}(t)}}}
+
+%-- Vektoren von Symbolen (Klein + Fettdruck)
+\newcommand {\symvec}[1]{\ensuremath{\boldsymbol{#1}}}
+\newcommand {\dotsymvec}[1]{\ensuremath{\dot{\boldsymbol{#1}}}}
+\newcommand {\ddotsymvec}[1]{\ensuremath{\ddot{\boldsymbol{#1}}}}
+
+%-- Funktionen von Vektoren (Fettdruck)
+\newcommand {\func }[1]{\ensuremath{\mathbf{#1}}}
+\newcommand {\symfunc}[1]{\ensuremath{\boldsymbol{#1}}}
+
+%-- R�mische Schrift (Gro�)
+\newcommand{\RM}[1]{\Romannum{#1}}
+
+%-- Namen
+\newcommand{\Rang}{\mathrm{Rang}}
+%\newcommand{\det}{\mathrm{det}}
+
+%-- Number sets
+\newcommand{\Rm}{\mathbb{R}}
+
+%-- Schreibweise Exponenten
+\newcommand{\vExp}[3] {\prescript{\mathrm{#1}}{}{\boldsymbol{#2}}_{\mathrm{#3}}} %{\leftidx{_{}^#1} {\boldsymbol{#2}} {_#3} }  
+
+
+%-------------------------------------------------------------------------------%
+%-------------------------------------------------------------------------------%
+
+%---------------------------------------
+%-- Arabische Ziffern (Fettdruck)
+%---------------------------------------
+
+\newcommand{\vNull}[0]{\boldsymbol{0}}
+\newcommand{\vEins}[0]{\boldsymbol{1}}
+\newcommand{\vZwei}[0]{\boldsymbol{2}}
+\newcommand{\vDrei}[0]{\boldsymbol{3}}
+\newcommand{\vVier}[0]{\boldsymbol{4}}
+\newcommand{\vFuenf}[0]{\boldsymbol{5}}
+\newcommand{\vSechs}[0]{\boldsymbol{6}}
+\newcommand{\vSieben}[0]{\boldsymbol{7}}
+\newcommand{\vAcht}[0]{\boldsymbol{8}}
+\newcommand{\vNeun}[0]{\boldsymbol{9}}
+
+%-------------------------------------------------------------------------------%
+%-------------------------------------------------------------------------------%
+
+%---------------------------------------
+%-- Lateinisches Alphabet
+%-- Klein + Fettdruck
+%---------------------------------------
+
+\newcommand{\va}[0]{\boldsymbol{a}}
+\newcommand{\vb}[0]{\boldsymbol{b}}
+\newcommand{\vc}[0]{\boldsymbol{c}}
+\newcommand{\vd}[0]{\boldsymbol{d}}
+\newcommand{\ve}[0]{\boldsymbol{e}}
+\newcommand{\vf}[0]{\boldsymbol{f}}
+\newcommand{\vg}[0]{\boldsymbol{g}}
+\newcommand{\vh}[0]{\boldsymbol{h}}
+\newcommand{\vi}[0]{\boldsymbol{i}}
+\newcommand{\vj}[0]{\boldsymbol{j}}
+\newcommand{\vk}[0]{\boldsymbol{k}}
+\newcommand{\vl}[0]{\boldsymbol{l}}
+\newcommand{\vm}[0]{\boldsymbol{m}}
+\newcommand{\vn}[0]{\boldsymbol{n}}
+\newcommand{\vo}[0]{\boldsymbol{o}}
+\newcommand{\vp}[0]{\boldsymbol{p}}
+\newcommand{\vq}[0]{\boldsymbol{q}}
+\newcommand{\vr}[0]{\boldsymbol{r}}
+\newcommand{\vs}[0]{\boldsymbol{s}}
+\newcommand{\vt}[0]{\boldsymbol{t}}
+\newcommand{\vu}[0]{\boldsymbol{u}}
+\newcommand{\vv}[0]{\boldsymbol{v}}
+\newcommand{\vw}[0]{\boldsymbol{w}}
+\newcommand{\vx}[0]{\boldsymbol{x}}
+\newcommand{\vy}[0]{\boldsymbol{y}}
+\newcommand{\vz}[0]{\boldsymbol{z}}
+
+%---------------------------------------
+%-- Lateinisches Alphabet
+%-- Klein + Fettdruck + �berstrich
+%---------------------------------------
+
+\newcommand{\vba}[0]{\boldsymbol{\overline{a}}}
+\newcommand{\vbb}[0]{\boldsymbol{\overline{b}}}
+\newcommand{\vbc}[0]{\boldsymbol{\overline{c}}}
+\newcommand{\vdb}[0]{\boldsymbol{\overline{d}}}
+\newcommand{\vbe}[0]{\boldsymbol{\overline{e}}}
+\newcommand{\vbf}[0]{\boldsymbol{\overline{f}}}
+\newcommand{\vbg}[0]{\boldsymbol{\overline{g}}}
+\newcommand{\vbh}[0]{\boldsymbol{\overline{h}}}
+\newcommand{\vbi}[0]{\boldsymbol{\overline{i}}}
+\newcommand{\vbj}[0]{\boldsymbol{\overline{j}}}
+\newcommand{\vbk}[0]{\boldsymbol{\overline{k}}}
+\newcommand{\vbl}[0]{\boldsymbol{\overline{l}}}
+\newcommand{\vbm}[0]{\boldsymbol{\overline{m}}}
+\newcommand{\vbn}[0]{\boldsymbol{\overline{n}}}
+\newcommand{\vbo}[0]{\boldsymbol{\overline{o}}}
+\newcommand{\vbp}[0]{\boldsymbol{\overline{p}}}
+\newcommand{\vbq}[0]{\boldsymbol{\overline{q}}}
+\newcommand{\vbr}[0]{\boldsymbol{\overline{r}}}
+\newcommand{\vbs}[0]{\boldsymbol{\overline{s}}}
+\newcommand{\vbt}[0]{\boldsymbol{\overline{t}}}
+\newcommand{\vbu}[0]{\boldsymbol{\overline{u}}}
+\newcommand{\vbv}[0]{\boldsymbol{\overline{v}}}
+\newcommand{\vbw}[0]{\boldsymbol{\overline{w}}}
+\newcommand{\vbx}[0]{\boldsymbol{\overline{x}}}
+\newcommand{\vby}[0]{\boldsymbol{\overline{y}}}
+\newcommand{\vbz}[0]{\boldsymbol{\overline{z}}}
+
+%---------------------------------------
+%-- Lateinisches Alphabet
+%-- Klein + Fettdruck + 2 �berstriche
+%---------------------------------------
+
+\newcommand{\vbba}[0]{\boldsymbol{\overline{\overline{a}}}}
+\newcommand{\vbbb}[0]{\boldsymbol{\overline{\overline{b}}}}
+\newcommand{\vbbc}[0]{\boldsymbol{\overline{\overline{c}}}}
+\newcommand{\vdbb}[0]{\boldsymbol{\overline{\overline{d}}}}
+\newcommand{\vbbe}[0]{\boldsymbol{\overline{\overline{e}}}}
+\newcommand{\vbbf}[0]{\boldsymbol{\overline{\overline{f}}}}
+\newcommand{\vbbg}[0]{\boldsymbol{\overline{\overline{g}}}}
+\newcommand{\vbbh}[0]{\boldsymbol{\overline{\overline{h}}}}
+\newcommand{\vbbi}[0]{\boldsymbol{\overline{\overline{i}}}}
+\newcommand{\vbbj}[0]{\boldsymbol{\overline{\overline{j}}}}
+\newcommand{\vbbk}[0]{\boldsymbol{\overline{\overline{k}}}}
+\newcommand{\vbbl}[0]{\boldsymbol{\overline{\overline{l}}}}
+\newcommand{\vbbm}[0]{\boldsymbol{\overline{\overline{m}}}}
+\newcommand{\vbbn}[0]{\boldsymbol{\overline{\overline{n}}}}
+\newcommand{\vbbo}[0]{\boldsymbol{\overline{\overline{o}}}}
+\newcommand{\vbbp}[0]{\boldsymbol{\overline{\overline{p}}}}
+\newcommand{\vbbq}[0]{\boldsymbol{\overline{\overline{q}}}}
+\newcommand{\vbbr}[0]{\boldsymbol{\overline{\overline{r}}}}
+\newcommand{\vbbs}[0]{\boldsymbol{\overline{\overline{s}}}}
+\newcommand{\vbbt}[0]{\boldsymbol{\overline{\overline{t}}}}
+\newcommand{\vbbu}[0]{\boldsymbol{\overline{\overline{u}}}}
+\newcommand{\vbbv}[0]{\boldsymbol{\overline{\overline{v}}}}
+\newcommand{\vbbw}[0]{\boldsymbol{\overline{\overline{w}}}}
+\newcommand{\vbbx}[0]{\boldsymbol{\overline{\overline{x}}}}
+\newcommand{\vbby}[0]{\boldsymbol{\overline{\overline{y}}}}
+\newcommand{\vbbz}[0]{\boldsymbol{\overline{\overline{z}}}}
+
+%---------------------------------------
+%-- Lateinisches Alphabet
+%-- Klein + Fettdruck + Dach
+%---------------------------------------
+
+\newcommand{\vha}[0]{\boldsymbol{\hat{a}}}
+\newcommand{\vhb}[0]{\boldsymbol{\hat{b}}}
+\newcommand{\vhc}[0]{\boldsymbol{\hat{c}}}
+\newcommand{\vhd}[0]{\boldsymbol{\hat{d}}}
+\newcommand{\vhe}[0]{\boldsymbol{\hat{e}}}
+\newcommand{\vhf}[0]{\boldsymbol{\hat{f}}}
+\newcommand{\vhg}[0]{\boldsymbol{\hat{g}}}
+\newcommand{\vhh}[0]{\boldsymbol{\hat{h}}}
+\newcommand{\vhi}[0]{\boldsymbol{\hat{i}}}
+\newcommand{\vhj}[0]{\boldsymbol{\hat{j}}}
+\newcommand{\vhk}[0]{\boldsymbol{\hat{k}}}
+\newcommand{\vhl}[0]{\boldsymbol{\hat{l}}}
+\newcommand{\vhm}[0]{\boldsymbol{\hat{m}}}
+\newcommand{\vhn}[0]{\boldsymbol{\hat{n}}}
+\newcommand{\vho}[0]{\boldsymbol{\hat{o}}}
+\newcommand{\vhp}[0]{\boldsymbol{\hat{p}}}
+\newcommand{\vhq}[0]{\boldsymbol{\hat{q}}}
+\newcommand{\vhr}[0]{\boldsymbol{\hat{r}}}
+\newcommand{\vhs}[0]{\boldsymbol{\hat{s}}}
+\newcommand{\vht}[0]{\boldsymbol{\hat{t}}}
+\newcommand{\vhu}[0]{\boldsymbol{\hat{u}}}
+\newcommand{\vhv}[0]{\boldsymbol{\hat{v}}}
+\newcommand{\vhw}[0]{\boldsymbol{\hat{w}}}
+\newcommand{\vhx}[0]{\boldsymbol{\hat{x}}}
+\newcommand{\vhy}[0]{\boldsymbol{\hat{y}}}
+\newcommand{\vhz}[0]{\boldsymbol{\hat{z}}}
+
+%---------------------------------------
+%-- Lateinisches Alphabet 
+%-- Gro� + Fettdruck 
+%---------------------------------------
+
+\newcommand{\vA}[0]{\boldsymbol{A}}
+\newcommand{\vB}[0]{\boldsymbol{B}}
+\newcommand{\vC}[0]{\boldsymbol{C}}
+\newcommand{\vD}[0]{\boldsymbol{D}}
+\newcommand{\vE}[0]{\boldsymbol{E}}
+\newcommand{\vF}[0]{\boldsymbol{F}}
+\newcommand{\vG}[0]{\boldsymbol{G}}
+\newcommand{\vH}[0]{\boldsymbol{H}}
+\newcommand{\vI}[0]{\boldsymbol{I}}
+\newcommand{\vJ}[0]{\boldsymbol{J}}
+\newcommand{\vK}[0]{\boldsymbol{K}}
+\newcommand{\vL}[0]{\boldsymbol{L}}
+\newcommand{\vM}[0]{\boldsymbol{M}}
+\newcommand{\vN}[0]{\boldsymbol{N}}
+\newcommand{\vO}[0]{\boldsymbol{O}}
+\newcommand{\vP}[0]{\boldsymbol{P}}
+\newcommand{\vQ}[0]{\boldsymbol{Q}}
+\newcommand{\vR}[0]{\boldsymbol{R}}
+\newcommand{\vS}[0]{\boldsymbol{S}}
+\newcommand{\vT}[0]{\boldsymbol{T}}
+\newcommand{\vU}[0]{\boldsymbol{U}}
+\newcommand{\vV}[0]{\boldsymbol{V}}
+\newcommand{\vW}[0]{\boldsymbol{W}}
+\newcommand{\vX}[0]{\boldsymbol{X}}
+\newcommand{\vY}[0]{\boldsymbol{Y}}
+\newcommand{\vZ}[0]{\boldsymbol{Z}}
+
+%---------------------------------------
+%-- Lateinisches Alphabet
+%-- Gro� + Fettdruck + �berstrich
+%---------------------------------------
+
+\newcommand{\vbA}[0]{\boldsymbol{\overline{A}}}
+\newcommand{\vbB}[0]{\boldsymbol{\overline{B}}}
+\newcommand{\vbC}[0]{\boldsymbol{\overline{C}}}
+\newcommand{\vbD}[0]{\boldsymbol{\overline{D}}}
+\newcommand{\vbE}[0]{\boldsymbol{\overline{E}}}
+\newcommand{\vbF}[0]{\boldsymbol{\overline{F}}}
+\newcommand{\vbG}[0]{\boldsymbol{\overline{G}}}
+\newcommand{\vbH}[0]{\boldsymbol{\overline{H}}}
+\newcommand{\vbI}[0]{\boldsymbol{\overline{I}}}
+\newcommand{\vbJ}[0]{\boldsymbol{\overline{J}}}
+\newcommand{\vbK}[0]{\boldsymbol{\overline{K}}}
+\newcommand{\vbL}[0]{\boldsymbol{\overline{L}}}
+\newcommand{\vbM}[0]{\boldsymbol{\overline{M}}}
+\newcommand{\vbN}[0]{\boldsymbol{\overline{N}}}
+\newcommand{\vbO}[0]{\boldsymbol{\overline{O}}}
+\newcommand{\vbP}[0]{\boldsymbol{\overline{P}}}
+\newcommand{\vbQ}[0]{\boldsymbol{\overline{Q}}}
+\newcommand{\vbR}[0]{\boldsymbol{\overline{R}}}
+\newcommand{\vbS}[0]{\boldsymbol{\overline{S}}}
+\newcommand{\vbT}[0]{\boldsymbol{\overline{T}}}
+\newcommand{\vbU}[0]{\boldsymbol{\overline{U}}}
+\newcommand{\vbV}[0]{\boldsymbol{\overline{V}}}
+\newcommand{\vbW}[0]{\boldsymbol{\overline{W}}}
+\newcommand{\vbX}[0]{\boldsymbol{\overline{X}}}
+\newcommand{\vbY}[0]{\boldsymbol{\overline{Y}}}
+\newcommand{\vbZ}[0]{\boldsymbol{\overline{Z}}}
+
+%---------------------------------------
+%-- Lateinisches Alphabet 
+%-- Gro� + Fettdruck + 2 �berstriche
+%---------------------------------------
+
+\newcommand{\vbbA}[0]{\boldsymbol{\overline{\overline{A}}}}
+\newcommand{\vbbB}[0]{\boldsymbol{\overline{\overline{B}}}}
+\newcommand{\vbbC}[0]{\boldsymbol{\overline{\overline{C}}}}
+\newcommand{\vbbD}[0]{\boldsymbol{\overline{\overline{D}}}}
+\newcommand{\vbbE}[0]{\boldsymbol{\overline{\overline{E}}}}
+\newcommand{\vbbF}[0]{\boldsymbol{\overline{\overline{F}}}}
+\newcommand{\vbbG}[0]{\boldsymbol{\overline{\overline{G}}}}
+\newcommand{\vbbH}[0]{\boldsymbol{\overline{\overline{H}}}}
+\newcommand{\vbbI}[0]{\boldsymbol{\overline{\overline{I}}}}
+\newcommand{\vbbJ}[0]{\boldsymbol{\overline{\overline{J}}}}
+\newcommand{\vbbK}[0]{\boldsymbol{\overline{\overline{K}}}}
+\newcommand{\vbbL}[0]{\boldsymbol{\overline{\overline{L}}}}
+\newcommand{\vbbM}[0]{\boldsymbol{\overline{\overline{M}}}}
+\newcommand{\vbbN}[0]{\boldsymbol{\overline{\overline{N}}}}
+\newcommand{\vbbO}[0]{\boldsymbol{\overline{\overline{O}}}}
+\newcommand{\vbbP}[0]{\boldsymbol{\overline{\overline{P}}}}
+\newcommand{\vbbQ}[0]{\boldsymbol{\overline{\overline{Q}}}}
+\newcommand{\vbbR}[0]{\boldsymbol{\overline{\overline{R}}}}
+\newcommand{\vbbS}[0]{\boldsymbol{\overline{\overline{S}}}}
+\newcommand{\vbbT}[0]{\boldsymbol{\overline{\overline{T}}}}
+\newcommand{\vbbU}[0]{\boldsymbol{\overline{\overline{U}}}}
+\newcommand{\vbbV}[0]{\boldsymbol{\overline{\overline{V}}}}
+\newcommand{\vbbW}[0]{\boldsymbol{\overline{\overline{W}}}}
+\newcommand{\vbbX}[0]{\boldsymbol{\overline{\overline{X}}}}
+\newcommand{\vbbY}[0]{\boldsymbol{\overline{\overline{Y}}}}
+\newcommand{\vbbZ}[0]{\boldsymbol{\overline{\overline{Z}}}}
+
+%-------------------------------------------------------------------------------%
+%-------------------------------------------------------------------------------%
+
+%---------------------------------------
+%-- Griechisches Alphabet 
+%-- Klein + Fettdruck 
+%---------------------------------------
+
+\newcommand{\valpha}[0]    {\boldsymbol{\alpha}}
+\newcommand{\vbeta}[0]     {\boldsymbol{\beta}}
+\newcommand{\vgamma}[0]    {\boldsymbol{\gamma}}
+\newcommand{\vdelta}[0]    {\boldsymbol{\delta}}
+\newcommand{\vepsilon}[0]  {\boldsymbol{\epsilon}}
+\newcommand{\vzeta}[0]     {\boldsymbol{\zeta}}
+\newcommand{\veta}[0]      {\boldsymbol{\eta}}
+\newcommand{\vtheta}[0]    {\boldsymbol{\theta}}
+\newcommand{\vvartheta}[0] {\boldsymbol{\vartheta}}
+\newcommand{\viota}[0]     {\boldsymbol{\iota}}
+\newcommand{\vkappa}[0]    {\boldsymbol{\kappa}}
+\newcommand{\vlambda}[0]   {\boldsymbol{\lambda}}
+\newcommand{\vmu}[0]       {\boldsymbol{\mu}}
+\newcommand{\vnu}[0]       {\boldsymbol{\nu}}
+\newcommand{\vxi}[0]       {\boldsymbol{\xi}}
+\newcommand{\vomikron}[0]  {\boldsymbol{\omikron}}
+\newcommand{\vpi}[0]       {\boldsymbol{\pi}}
+\newcommand{\vrho}[0]      {\boldsymbol{\rho}}
+\newcommand{\vsigma}[0]    {\boldsymbol{\sigma}}
+\newcommand{\vtau}[0]      {\boldsymbol{\tau}}
+\newcommand{\vypsilon}[0]  {\boldsymbol{\ypsilon}}
+\newcommand{\vvarphi}[0]   {\boldsymbol{\varphi}}
+\newcommand{\vphi}[0]      {\boldsymbol{\phi}}
+\newcommand{\vchi}[0]      {\boldsymbol{\chi}}
+\newcommand{\vpsi}[0]      {\boldsymbol{\psi}}
+\newcommand{\vomega}[0]    {\boldsymbol{\omega}}
+
+%---------------------------------------
+%-- Griechisches Alphabet 
+%-- Klein + Fettdruck + Dach
+%---------------------------------------
+
+\newcommand{\vhalpha}[0]    {\boldsymbol{\hat{\alpha}}}
+\newcommand{\vhbeta}[0]     {\boldsymbol{\hat{\beta}}}
+\newcommand{\vhgamma}[0]    {\boldsymbol{\hat{\gamma}}}
+\newcommand{\vhdelta}[0]    {\boldsymbol{\hat{\delta}}}
+\newcommand{\vhepsilon}[0]  {\boldsymbol{\hat{\epsilon}}}
+\newcommand{\vhzeta}[0]     {\boldsymbol{\hat{\zeta}}}
+\newcommand{\vheta}[0]      {\boldsymbol{\hat{\eta}}}
+\newcommand{\vhtheta}[0]    {\boldsymbol{\hat{\theta}}}
+\newcommand{\vhiota}[0]     {\boldsymbol{\hat{\iota}}}
+\newcommand{\vhkappa}[0]    {\boldsymbol{\hat{\kappa}}}
+\newcommand{\vhlambda}[0]   {\boldsymbol{\hat{\lambda}}}
+\newcommand{\vhmu}[0]       {\boldsymbol{\hat{\mu}}}
+\newcommand{\vhnu}[0]       {\boldsymbol{\hat{\nu}}}
+\newcommand{\vhxi}[0]       {\boldsymbol{\hat{\xi}}}
+\newcommand{\vhomikron}[0]  {\boldsymbol{\hat{\omikron}}}
+\newcommand{\vhpi}[0]       {\boldsymbol{\hat{\pi}}}
+\newcommand{\vhrho}[0]      {\boldsymbol{\hat{\rho}}}
+\newcommand{\vhsigma}[0]    {\boldsymbol{\hat{\sigma}}}
+\newcommand{\vhtau}[0]      {\boldsymbol{\hat{\tau}}}
+\newcommand{\vhypsilon}[0]  {\boldsymbol{\hat{\ypsilon}}}
+\newcommand{\vhvarphi}[0]   {\boldsymbol{\hat{\varphi}}}
+\newcommand{\vhphi}[0]      {\boldsymbol{\hat{\phi}}}
+\newcommand{\vhchi}[0]      {\boldsymbol{\hat{\chi}}}
+\newcommand{\vhpsi}[0]      {\boldsymbol{\hat{\psi}}}
+\newcommand{\vhomega}[0]    {\boldsymbol{\hat{\omega}}}
+
+%---------------------------------------
+%-- Griechisches Alphabet 
+%-- Klein + Fettdruck + �berstrich
+%---------------------------------------
+
+\newcommand{\vbalpha}[0]    {\boldsymbol{\overline{\alpha}}}
+\newcommand{\vbbeta}[0]     {\boldsymbol{\overline{\beta}}}
+\newcommand{\vbgamma}[0]    {\boldsymbol{\overline{\gamma}}}
+\newcommand{\vbdelta}[0]    {\boldsymbol{\overline{\delta}}}
+\newcommand{\vbepsilon}[0]  {\boldsymbol{\overline{\epsilon}}}
+\newcommand{\vbzeta}[0]     {\boldsymbol{\overline{\zeta}}}
+%\newcommand{\vbeta}[0]      {\boldsymbol{\overline{\eta}}}
+\newcommand{\vbtheta}[0]    {\boldsymbol{\overline{\theta}}}
+\newcommand{\vbiota}[0]     {\boldsymbol{\overline{\iota}}}
+\newcommand{\vbkappa}[0]    {\boldsymbol{\overline{\kappa}}}
+\newcommand{\vblambda}[0]   {\boldsymbol{\overline{\lambda}}}
+\newcommand{\vbmu}[0]       {\boldsymbol{\overline{\mu}}}
+\newcommand{\vbnu}[0]       {\boldsymbol{\overline{\nu}}}
+\newcommand{\vbxi}[0]       {\boldsymbol{\overline{\xi}}}
+\newcommand{\vbomikron}[0]  {\boldsymbol{\overline{\omikron}}}
+\newcommand{\vbpi}[0]       {\boldsymbol{\overline{\pi}}}
+\newcommand{\vbrho}[0]      {\boldsymbol{\overline{\rho}}}
+\newcommand{\vbsigma}[0]    {\boldsymbol{\overline{\sigma}}}
+\newcommand{\vbtau}[0]      {\boldsymbol{\overline{\tau}}}
+\newcommand{\vbypsilon}[0]  {\boldsymbol{\overline{\ypsilon}}}
+\newcommand{\vbvarphi}[0]   {\boldsymbol{\overline{\varphi}}}
+\newcommand{\vbphi}[0]      {\boldsymbol{\overline{\phi}}}
+\newcommand{\vbchi}[0]      {\boldsymbol{\overline{\chi}}}
+\newcommand{\vbpsi}[0]      {\boldsymbol{\overline{\psi}}}
+\newcommand{\vbomega}[0]    {\boldsymbol{\overline{\omega}}}
+
+%---------------------------------------
+%-- Griechisches Alphabet 
+%-- Klein + Fettdruck + 2 �berstriche
+%---------------------------------------
+
+\newcommand{\vbbalpha}[0]    {\boldsymbol{\overline{\overline{\Alpha}}}}
+\newcommand{\vbbbeta}[0]     {\boldsymbol{\overline{\overline{\Beta}}}}
+\newcommand{\vbbgamma}[0]    {\boldsymbol{\overline{\overline{\Gamma}}}}
+\newcommand{\vbbdelta}[0]    {\boldsymbol{\overline{\overline{\Delta}}}}
+\newcommand{\vbbepsilon}[0]  {\boldsymbol{\overline{\overline{\Epsilon}}}}
+\newcommand{\vbbzeta}[0]     {\boldsymbol{\overline{\overline{\Zeta}}}}
+%\newcommand{\vbbeta}[0]      {\boldsymbol{\overline{\overline{\Eta}}}}
+\newcommand{\vbbtheta}[0]    {\boldsymbol{\overline{\overline{\Theta}}}}
+\newcommand{\vbbiota}[0]     {\boldsymbol{\overline{\overline{\Iota}}}}
+\newcommand{\vbbkappa}[0]    {\boldsymbol{\overline{\overline{\Kappa}}}}
+\newcommand{\vbblambda}[0]   {\boldsymbol{\overline{\overline{\Lambda}}}}
+\newcommand{\vbbmu}[0]       {\boldsymbol{\overline{\overline{\Mu}}}}
+\newcommand{\vbbnu}[0]       {\boldsymbol{\overline{\overline{\Nu}}}}
+\newcommand{\vbbxi}[0]       {\boldsymbol{\overline{\overline{\Xi}}}}
+\newcommand{\vbbomikron}[0]  {\boldsymbol{\overline{\overline{\Omikron}}}}
+\newcommand{\vbbpi}[0]       {\boldsymbol{\overline{\overline{\Pi}}}}
+\newcommand{\vbbrho}[0]      {\boldsymbol{\overline{\overline{\Rho}}}}
+\newcommand{\vbbsigma}[0]    {\boldsymbol{\overline{\overline{\Sigma}}}}
+\newcommand{\vbbtau}[0]      {\boldsymbol{\overline{\overline{\Tau}}}}
+\newcommand{\vbbypsilon}[0]  {\boldsymbol{\overline{\overline{\Ypsilon}}}}
+\newcommand{\vbbvarphi}[0]   {\boldsymbol{\overline{\overline{\Varphi}}}}
+\newcommand{\vbbphi}[0]      {\boldsymbol{\overline{\overline{\Phi}}}}
+\newcommand{\vbbchi}[0]      {\boldsymbol{\overline{\overline{\Chi}}}}
+\newcommand{\vbbpsi}[0]      {\boldsymbol{\overline{\overline{\Psi}}}}
+\newcommand{\vbbomega}[0]    {\boldsymbol{\overline{\overline{\Omega}}}}
+
+
+%---------------------------------------
+%-- Griechisches Alphabet 
+%-- Gro� + Fettdruck 
+%---------------------------------------
+
+\newcommand{\vAlpha}[0]    {\boldsymbol{\Alpha}}
+\newcommand{\vBeta}[0]     {\boldsymbol{\Beta}}
+\newcommand{\vGamma}[0]    {\boldsymbol{\Gamma}}
+\newcommand{\vDelta}[0]    {\boldsymbol{\Delta}}
+\newcommand{\vEpsilon}[0]  {\boldsymbol{\Epsilon}}
+\newcommand{\vZeta}[0]     {\boldsymbol{\Zeta}}
+\newcommand{\vEta}[0]      {\boldsymbol{\Eta}}
+\newcommand{\vTheta}[0]    {\boldsymbol{\Theta}}
+\newcommand{\vIota}[0]     {\boldsymbol{\Iota}}
+\newcommand{\vKappa}[0]    {\boldsymbol{\Kappa}}
+\newcommand{\vLambda}[0]   {\boldsymbol{\Lambda}}
+\newcommand{\vMu}[0]       {\boldsymbol{\Mu}}
+\newcommand{\vNu}[0]       {\boldsymbol{\Nu}}
+\newcommand{\vXi}[0]       {\boldsymbol{\Xi}}
+\newcommand{\vOmikron}[0]  {\boldsymbol{\Omikron}}
+\newcommand{\vPi}[0]       {\boldsymbol{\Pi}}
+\newcommand{\vRho}[0]      {\boldsymbol{\Rho}}
+\newcommand{\vSigma}[0]    {\boldsymbol{\Sigma}}
+\newcommand{\vTau}[0]      {\boldsymbol{\Tau}}
+\newcommand{\vYpsilon}[0]  {\boldsymbol{\Ypsilon}}
+\newcommand{\vPhi}[0]      {\boldsymbol{\Phi}}
+\newcommand{\vChi}[0]      {\boldsymbol{\Chi}}
+\newcommand{\vPsi}[0]      {\boldsymbol{\Psi}}
+\newcommand{\vOmega}[0]    {\boldsymbol{\Omega}}
+
+%---------------------------------------
+%-- Griechisches Alphabet 
+%-- Gro� + Fettdruck + Dach
+%---------------------------------------
+
+\newcommand{\vhAlpha}[0]    {\boldsymbol{\hat{\Alpha}}}
+\newcommand{\vhBeta}[0]     {\boldsymbol{\hat{\Beta}}}
+\newcommand{\vhGamma}[0]    {\boldsymbol{\hat{\Gamma}}}
+\newcommand{\vhGelta}[0]    {\boldsymbol{\hat{\Delta}}}
+\newcommand{\vhEpsilon}[0]  {\boldsymbol{\hat{\Epsilon}}}
+\newcommand{\vhZeta}[0]     {\boldsymbol{\hat{\Zeta}}}
+\newcommand{\vhEta}[0]      {\boldsymbol{\hat{\Eta}}}
+\newcommand{\vhTheta}[0]    {\boldsymbol{\hat{\Theta}}}
+\newcommand{\vhIota}[0]     {\boldsymbol{\hat{\Iota}}}
+\newcommand{\vhKappa}[0]    {\boldsymbol{\hat{\Kappa}}}
+\newcommand{\vhLambda}[0]   {\boldsymbol{\hat{\Lambda}}}
+\newcommand{\vhMu}[0]       {\boldsymbol{\hat{\Mu}}}
+\newcommand{\vhNu}[0]       {\boldsymbol{\hat{\Nu}}}
+\newcommand{\vhXi}[0]       {\boldsymbol{\hat{\Xi}}}
+\newcommand{\vhOmikron}[0]  {\boldsymbol{\hat{\Omikron}}}
+\newcommand{\vhPi}[0]       {\boldsymbol{\hat{\Pi}}}
+\newcommand{\vhRho}[0]      {\boldsymbol{\hat{\Rho}}}
+\newcommand{\vhSigma}[0]    {\boldsymbol{\hat{\Sigma}}}
+\newcommand{\vhTau}[0]      {\boldsymbol{\hat{\Tau}}}
+\newcommand{\vhYpsilon}[0]  {\boldsymbol{\hat{\Ypsilon}}}
+\newcommand{\vhVarphi}[0]   {\boldsymbol{\hat{\Varphi}}}
+\newcommand{\vhPhi}[0]      {\boldsymbol{\hat{\Phi}}}
+\newcommand{\vhChi}[0]      {\boldsymbol{\hat{\Chi}}}
+\newcommand{\vhPsi}[0]      {\boldsymbol{\hat{\Psi}}}
+\newcommand{\vhOmega}[0]    {\boldsymbol{\hat{\Omega}}}
+
+%---------------------------------------
+%-- Griechisches Alphabet 
+%-- Gro� + Fettdruck + �berstrich
+%---------------------------------------
+
+\newcommand{\vbAlpha}[0]    {\boldsymbol{\overline{\Alpha}}}
+\newcommand{\vbBeta}[0]     {\boldsymbol{\overline{\Beta}}}
+\newcommand{\vbGamma}[0]    {\boldsymbol{\overline{\Gamma}}}
+\newcommand{\vbDelta}[0]    {\boldsymbol{\overline{\Delta}}}
+\newcommand{\vbEpsilon}[0]  {\boldsymbol{\overline{\Epsilon}}}
+\newcommand{\vbZeta}[0]     {\boldsymbol{\overline{\Zeta}}}
+\newcommand{\vbEta}[0]      {\boldsymbol{\overline{\Eta}}}
+\newcommand{\vbTheta}[0]    {\boldsymbol{\overline{\Theta}}}
+\newcommand{\vbIota}[0]     {\boldsymbol{\overline{\Iota}}}
+\newcommand{\vbKappa}[0]    {\boldsymbol{\overline{\Kappa}}}
+\newcommand{\vbLambda}[0]   {\boldsymbol{\overline{\Lambda}}}
+\newcommand{\vbMu}[0]       {\boldsymbol{\overline{\Mu}}}
+\newcommand{\vbNu}[0]       {\boldsymbol{\overline{\Nu}}}
+\newcommand{\vbXi}[0]       {\boldsymbol{\overline{\Xi}}}
+\newcommand{\vbOmikron}[0]  {\boldsymbol{\overline{\Omikron}}}
+\newcommand{\vbPi}[0]       {\boldsymbol{\overline{\Pi}}}
+\newcommand{\vbRho}[0]      {\boldsymbol{\overline{\Rho}}}
+\newcommand{\vbSigma}[0]    {\boldsymbol{\overline{\Sigma}}}
+\newcommand{\vbTau}[0]      {\boldsymbol{\overline{\Tau}}}
+\newcommand{\vbYpsilon}[0]  {\boldsymbol{\overline{\Ypsilon}}}
+\newcommand{\vbVarphi}[0]   {\boldsymbol{\overline{\Varphi}}}
+\newcommand{\vbPhi}[0]      {\boldsymbol{\overline{\Phi}}}
+\newcommand{\vbChi}[0]      {\boldsymbol{\overline{\Chi}}}
+\newcommand{\vbPsi}[0]      {\boldsymbol{\overline{\Psi}}}
+\newcommand{\vbOmega}[0]    {\boldsymbol{\overline{\Omega}}}
+
+%---------------------------------------
+%-- Griechisches Alphabet 
+%-- Gro� + Fettdruck + 2 �berstriche
+%---------------------------------------
+
+\newcommand{\vbbAlpha}[0]    {\boldsymbol{\overline{\overline{\Alpha}}}}
+\newcommand{\vbbBeta}[0]     {\boldsymbol{\overline{\overline{\Beta}}}}
+\newcommand{\vbbGamma}[0]    {\boldsymbol{\overline{\overline{\Gamma}}}}
+\newcommand{\vbbDelta}[0]    {\boldsymbol{\overline{\overline{\Delta}}}}
+\newcommand{\vbbEpsilon}[0]  {\boldsymbol{\overline{\overline{\Epsilon}}}}
+\newcommand{\vbbZeta}[0]     {\boldsymbol{\overline{\overline{\Zeta}}}}
+\newcommand{\vbbEta}[0]      {\boldsymbol{\overline{\overline{\Eta}}}}
+\newcommand{\vbbTheta}[0]    {\boldsymbol{\overline{\overline{\Theta}}}}
+\newcommand{\vbbIota}[0]     {\boldsymbol{\overline{\overline{\Iota}}}}
+\newcommand{\vbbKappa}[0]    {\boldsymbol{\overline{\overline{\Kappa}}}}
+\newcommand{\vbbLambda}[0]   {\boldsymbol{\overline{\overline{\Lambda}}}}
+\newcommand{\vbbMu}[0]       {\boldsymbol{\overline{\overline{\Mu}}}}
+\newcommand{\vbbNu}[0]       {\boldsymbol{\overline{\overline{\Nu}}}}
+\newcommand{\vbbXi}[0]       {\boldsymbol{\overline{\overline{\Xi}}}}
+\newcommand{\vbbOmikron}[0]  {\boldsymbol{\overline{\overline{\Omikron}}}}
+\newcommand{\vbbPi}[0]       {\boldsymbol{\overline{\overline{\Pi}}}}
+\newcommand{\vbbRho}[0]      {\boldsymbol{\overline{\overline{\Rho}}}}
+\newcommand{\vbbSigma}[0]    {\boldsymbol{\overline{\overline{\Sigma}}}}
+\newcommand{\vbbTau}[0]      {\boldsymbol{\overline{\overline{\Tau}}}}
+\newcommand{\vbbYpsilon}[0]  {\boldsymbol{\overline{\overline{\Ypsilon}}}}
+\newcommand{\vbbVarphi}[0]   {\boldsymbol{\overline{\overline{\Varphi}}}}
+\newcommand{\vbbPhi}[0]      {\boldsymbol{\overline{\overline{\Phi}}}}
+\newcommand{\vbbChi}[0]      {\boldsymbol{\overline{\overline{\Chi}}}}
+\newcommand{\vbbPsi}[0]      {\boldsymbol{\overline{\overline{\Psi}}}}
+\newcommand{\vbbOmega}[0]    {\boldsymbol{\overline{\overline{\Omega}}}}
+
+%-------------------------------------------------------------------------------%
+%-------------------------------------------------------------------------------%

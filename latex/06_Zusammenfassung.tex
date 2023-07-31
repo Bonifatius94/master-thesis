@@ -1,0 +1,66 @@
+
+\cleardoublepage
+\chapter{Zusammenfassung und Ausblick}\label{ch:Summary}
+
+\section{Zusammenfassung}
+Im Rahmen dieser Arbeit wurde eine Fahrsoftware zur Lokalen Navigation
+von Mikromobilitätsfahrzeugen mittels Deep Reinforcement Learning entwickelt.
+Dabei fokussierten sich die Untersuchungen auf die sichere Interaktion des Fahrzeugs
+mit Fußgängern in Fußgängerzonen und auf Gehwegen, was durch die Erweiterung eines
+existierenden Simulators \emph{RobotSF} umgesetzt werden konnte. Die 19-fache
+Beschleunigung der Simulationszeit ermöglichte die Durchführbarkeit zahlreicher
+Lernexperimente auf dem virtuellen Universitätscampus. Zusätzlich konnte durch das
+gewählte Lernverfahren der Proximal Policy Optimization eine weitere Effizienzsteigerung
+erzielt werden. In Kombination ermöglichten die Verbesserungen bezüglich der Effizienz,
+dass Trainingsläufe nun nicht mehr länger als einen Tag daueren, was im Vergleich zur
+vorherigen Umsetzung von Caruso et. al mit Trainingszeiten von bis zu einem Monat einen
+großen Fortschritt darstellt.\\
+
+Die im adaptierten \emph{RobotSF} Simulator durchgeführten Lernexperimente ergaben
+wertvolle Erkenntnisse bezüglich der Erlernbarkeit unfallsicherer Fahrverhaltensweisen.
+Durch Anpassungen im Kartenmaterial konnte sehr robustes, sicheres Verhalten in dichten
+Menschenmassen erlernt werden. Es wurde zudem deutlich, dass die Gestaltung der Trainingsumgebung
+anhand der Zusammenstellung des Kartenmaterials, der Konfiguration der Social Forces und
+der gewählten Belohnungsstruktur großen Einfluss auf die erlernten Fahrverhaltensweisen hat.
+Unter anderem konnte die Verkehrssicherheit bei dichtem Verkehr durch eine defensive Strategie
+im Vergleich zu vorherigen Ansätzen erheblich verbessert werden. Die Kollisionsrate mit Fußgängern
+wurde von vormals 47\% auf 0\% gesenkt. Hierbei mussten keinerlei Kompromisse bei der
+Ankunftsrate hingenommen werden, da die defensive Strategie eine ähnlich hohe Ankunftsrate
+wie vergleichbare Agenten von Caruso et. al aufwies.\\
+
+Die Repräsentation guter Agenten mittels kleiner Modelle mit weniger als einer Million Gewichten
+demonstrierte eindrücklich, dass die Trainingszeiten aufgrund der effizient berechenbaren
+Modellvorhersagen durch das Sammeln der Trainingsdaten dominiert werden. Hinsichtlich der
+Erhöhung der Trainingsdateneffizienz wurde die Optimierung der Trainingseinstellungen
+untersucht, wobei die meisten Parameter aus der Konzeption der Modell- und Belohnungsstrukturen
+bestätigt und einige weitere Parameter verbessert werden konnten.
+Vor allem die einfachere Belohnungsstruktur ermöglichte das Erlernen vielfältiger
+Verhaltensweisen und greift nicht zu stark in die Lösungsfindung des Agenten ein, was eine
+Verbesserung gegenüber vergleichbaren Arbeiten darstellt.\\
+
+Zusammenfassend kann gesagt werden, dass die Ziele dieser Arbeit für den Anwendungsfall
+der sicheren Lokalen Navigation in Fußgängerzonen und auf Gehwegen erreicht wurden.
+Außerdem wurden einige interessante Ansätze bezüglich der Entwicklung sicherer Fahrsoftware
+mittels Neuronaler Netze präsentiert, die weiter verfolgt werden können. Es ist klar,
+dass es bis zur Entwicklung einer Fahrsoftware, die im normalen Straßenverkehr eingesetzt
+werden kann, noch ein weiter Weg ist.
+
+\section{Ausblick}
+Aufgrund der guten Eigenschaften der erlernten Fahrsoftware ist mittelfristig eine
+Erprobung in der Realität mit einem echten Fahrzeug denkbar. Hierfür bietet sich
+der Campus der Universität Augsburg an, da die Evaluation der trainierten Fahrsoftware
+ohnehin auf dem virtuellen Modell des Campus durchgeführt wurde.\\
+
+Durch das Hinzufügen zusätzlicher Verkehrsteilnehmer, Fahrzeugkinematiken und Entitäten
+zur Simulationsumgebung kann die Fahrsoftware in noch realistischeren Szenarien
+außerhalb von Gehwegen und Fußgängerzonen erprobt werden. Möglichkeiten für die
+Erweiterung wurden aufgezeigt. Zudem kann auch eine weitere Effizienzsteigerung der
+Simulationslogik mittels lokalitätsaffiner Datenstrukturen und Algorithmen interessant
+sein, um noch mehr Experimente durchführen zu können. Auch die gleichzeitige Simulation
+mehrerer Fahrzeuge in derselben Umgebung verspricht zusätzliche Effizienzsteigerungen
+und eine Verbesserung der erlernten Fahrqualität.\\
+
+Durch die Auslegung von Simulationsumgebung und Fahrsoftware auf Falsifizierbarkeit
+können nun in folgenden Arbeiten die Schwachstellen der trainierten Modelle
+identifiziert und behoben werden, um eine sichere Erprobung der Fahrsoftware in der
+Realität voranzutreiben.

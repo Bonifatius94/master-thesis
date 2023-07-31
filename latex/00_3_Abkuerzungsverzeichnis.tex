@@ -1,0 +1,50 @@
+\chapter*{Symbolverzeichnis}
+\addcontentsline{toc}{chapter}{Symbolverzeichnis}
+Einträge werden an beliebiger Stelle erzeugt mit \begin{verbatim}
+    \newglossaryentry{c}{
+    name=\ensuremath{c},
+    description={Lichtgeschwindigkeit},
+    unit={\SI{299792458}{\metre\per\second}},
+    type=konstante}
+\end{verbatim}
+Als type lässt sich entweder \textit{symbol} oder \textit{konstante} wählen. 
+Im Header können die Werte von \verb+\dimen0+ und \verb+\dimen2+ angepasst werden, um die Spaltenbreite der ersten und letzten Spalte zu ändern.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Glossary Einträge
+   
+ \newglossaryentry{c1}{
+    name=\ensuremath{c},
+    description={Lichtgeschwindigkeit},
+    unit={\SI{299792458}{\metre\per\second}},
+    type=konstante}
+    
+    \newglossaryentry{c2}{
+    name=\ensuremath{c},
+    description={Lichtgeschwindigkeit Lichtgeschwindigkeit Lichtgeschwindigkeit Lichtgeschwindigkeit Lichtgeschwindigkeit Lichtgeschwindigkeit},
+    unit={\SI{299792458}{\metre\per\second}},
+    type=konstante}
+
+	\newglossaryentry{leistung1}{
+    name=\ensuremath{P},
+    description={Leistung},
+    unit={\si{kW}},
+    type=symbol}
+
+    \newglossaryentry{leistung2}{
+    name=\ensuremath{P},
+    description={Leistung Leistung},
+    unit={\si{kW}},
+    type=symbol}
+
+    \newglossaryentry{leistung3}{
+    name=\ensuremath{P},
+    description={Leistung Leistung Leistung Leistung Leistung Leistung Leistung Leistung Leistung Leistung Leistung},
+    unit={\si{kW}},
+    type=symbol}
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% zum Ausgeben der Verzeichnisse 
+\symbolverzeichnis
+

@@ -1,0 +1,42 @@
+%\chapter{Sinnvolle Bezeichnung von Labels}
+%Mit größerem Umfang der Arbeit nimmt auch die Anzahl der verwendeten Labels zu. Um dabei den Überblick nicht zu verlieren, bietet es sich an, beschreibende Namen zu verwenden. Außerdem sollte im Label markiert werden, ob es sich bspw. um eine Tabelle, ein Bild, eine Gleichung o.ä. handelt. Dabei bietet sich bspw. folgende Bezeichnung an: 
+%\begin{table}[ht]
+%\centering 
+%\begin{tabular}{l c}
+%\textbf{ch:}& Kapitel\\
+%\textbf{sec:}& Section\\
+%\textbf{fig:}& Bild\\
+%\textbf{eq:}& Gleichung\\
+%\textbf{tab:}& Tabelle\\
+%\end{tabular}
+%\caption{Auswahl an Label-Kürzel}
+%\end{table}
+%
+%Genutzt wird dies nun z.B. als \verb+\label{tab:label_kuerzel}+.
+%
+%\section{Anmerkung zum Tabellen- und Abbildungsverzeichnis}
+%Tabellen- und Abbildungsverzeichnis werden nicht unbedingt benötigt. Hier ist eine Absprache mit dem jeweiligen Betreuer sinnvoll. 
+%
+%\chapter{Beispielcode}
+%\label{code_subfig}
+%\lstset{language={[LaTeX]TeX},style=nonumbers}
+%\begin{lstlisting}
+%\begin{figure}[h]
+%     \centering
+%     \begin{subfigure}[b]{0.55\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{Bilder/bild1}
+%         \caption{subcaption1}
+%         \label{fig:2_Bilder_Bild_1}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.31\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{Bilder/bild2}
+%         \caption{subcaption2}
+%         \label{fig:2_Bilder_Bild_2}
+%     \end{subfigure}
+%     \caption{caption}
+%     \label{fig:2_Bilder}
+%\end{figure}
+%\end{lstlisting}

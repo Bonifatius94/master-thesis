@@ -1,0 +1,160 @@
+%   header.tex 
+%   Version 1.0     |   Peter Krönes    |   08.05.2018
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass
+[   oneside,         % oneside/twoside : Einseitiger oder zweiseitiger Druck?
+    12pt,            % Bezug: 12-Punkt Schriftgröße
+    DIV=15,          % Randaufteilung, siehe Dokumentation "KOMA"-Script
+    BCOR=17mm,       % Bindekorrektur: Innen 17mm Platz lassen. Copyshop-getestet.
+    headsepline,     % Unter Kopfzeile Trennlinie (aus: headnosepline)
+    openright,       % Neue Kapitel im zweiseitigen Druck rechts beginnen lassen
+    a4paper,         % Seitenformat A4
+    listof=totoc,      % Div. Verzeichnisse ins Inhaltsverzeichnis aufnehmen
+    bibliography=totoc,        % Literaturverzeichnis ins Inhaltsverzeichnis aufnehmen
+]   {scrbook}        %scrbook für Abschlussarbeiten 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[
+    backend=biber,
+    natbib=true,
+    url=false, 
+    doi=true,
+    eprint=false,
+    backref=true,
+    sorting=none
+]{biblatex}
+\usepackage{hyperref}%[pdftex,bookmarks,colorlinks,citecolor=black,breakl inks]
+\appto\UrlBreaks{\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j
+	\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w
+	\do\x\do\y\do\z}						% Umbruch von langen URLs
+
+\DefineBibliographyStrings{ngerman}{%
+  backrefpage = {S.},                       % originally "cited on page"
+  backrefpages = {S.},                      % originally "cited on pages"
+  andothers = {{et\,al\adddot}},
+}
+%%%%%%%%%%%%%%%%%%%%%         PAKETE        %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc} 
+\usepackage{csquotes}                       % Anführungszeichen
+\usepackage{setspace}                       % Zeilenabstand
+\usepackage[ngerman]{babel}                 % Spracheinstellung
+\usepackage{float}                          % Platzierung von Objekten
+\floatstyle{plaintop}						% Caption über Tabellen
+\restylefloat{table}						% ^^^^^^^^^^^^^^^^^^^^
+\usepackage{pdfpages}                       % PDF Seitenweise einfügen
+\usepackage[font=normalsize]{caption}       % Größe der Bild-/Tabellenunterschrift 
+\usepackage{acronym}                        % Abkürzungsverzeichnis
+\newcommand{\acrosecondcolumn}[1]{
+  \acroextra{\makebox[70mm][l]{#1}}
+}
+\usepackage{graphicx}                       % Für Bilder
+\usepackage{subcaption}                     % mehrere Bilder nebeneinander
+\usepackage{floatflt}                       % Umlossene Bilder
+%\usepackage{overpic}						% Überlagerung von Bildern
+\usepackage{svg}                            % Vektorgrafiken im svg-format
+%\usepackage{tabu}						    % Abstände in Tabellen (\tabulinesep)
+\usepackage{tabularx}                       % Für Tabellen
+\usepackage{booktabs}                       % Noch ein Tabellenpaket
+\usepackage{color}                          % farbiger Text
+\usepackage{lineno}                         % Zeilennummern 
+\usepackage{microtype}                      % Macht alles schöner
+\usepackage{listings}                       % Für Code
+\usepackage{src/mcode/mcode}                % Matlab-Code Paket
+\usepackage{src/abkuerzung}                 % Abkürzungen
+\usepackage{blindtext}                      % Beispieltext zum auspobieren
+\usepackage{todonotes}                      % Fügt Todo Notes ein
+\usepackage{eurosym}                        % Eurozeichen mit \euro
+\usepackage{afterpage}						% A3 pages in A4 Document
+\usepackage{siunitx}                        % SI-Einheiten
+\sisetup{output-decimal-marker = {,}}       % Dezimaltrennzeichen
+\usepackage{array}                          % Array
+
+
+%% Tikz-Pakete
+\usepackage{tikz}
+\usepackage[siunitx,european,straightvoltages]{circuitikz}          % Schaltkreise
+\usetikzlibrary{decorations.pathreplacing}                          % Schaltkreiszusatz
+%\usetikzlibrary{arrows.meta}
+\usetikzlibrary{arrows}
+\usetikzlibrary{patterns}
+\usetikzlibrary{ipe}
+\usetikzlibrary{positioning}
+%\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{shapes}
+\usetikzlibrary{backgrounds}
+
+%%Mathematik-Pakete für Formeln
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+%\usepackage{esvect}
+%\numberwithin{equation}{section} %Nummerierungsebene für Gleichungen
+\usepackage{gensymb}
+\usepackage{multirow}
+\usepackage{bigdelim}
+\usepackage{epsfig}
+\usepackage{etoolbox} 
+\makeatletter 
+\patchcmd\Gread@eps{\@inputcheck#1 }{\@inputcheck"#1"\relax}{}{}
+\makeatother
+%\renewcommand*{\familydefault}{\sfdefault}
+%\newcommand*{\head}{\bfseries}
+%
+\newcolumntype{_}{>{\global\let\currentrowstyle\relax}}
+\newcolumntype{^}{>{\currentrowstyle}}
+\newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1}%
+	#1\ignorespaces
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Setzt die Kapitel im Anhang nicht ins Inhaltsverzeichnis, setzt man 
+% Abbildungsverzeichnis und Tabellenverzeichnis hinter den Anhang erscheinen 
+% diese Trotzdem im Inhaltsverzeichnis.
+%\usepackage[toc,page]{appendix}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\parindent}{0pt}                 % Absätze nicht eingerückt
+%% Änderungen Pauline %%%%%%%%%%%%%%%%%%%%%%
+\usepackage{cleveref}						% ans Ende verschoben, da Kompilierungsfehler
+
+% Styles um Code mit oder ohne Zeilennummerierung auszugeben
+\lstdefinestyle{numbers}{numbers=left, stepnumber=1, numberstyle=\tiny, numbersep=10pt,xleftmargin=1.5em}
+\lstdefinestyle{nonumbers}{numbers=none}
+
+%% Glossaries für Symbolverzeichnis
+\usepackage[acronym,automake]{glossaries}             
+\usepackage{glossary-longbooktabs}
+
+\newglossary[klg]{konstante}{koi}{kog}{Konstanten} 
+\newglossary[slg]{symbol}{syi}{syg}{Symbole} 
+\glsaddkey{unit}{\glsentrytext{\glslabel}}{\glsentryunit}{\GLsentryunit}{\glsunit}{\Glsunit}{\GLSunit}
+
+\newglossarystyle{3colger}{%
+    \setglossarystyle{longragged3col}% base this style on the list style
+    \renewenvironment{theglossary}{% Change the table type --> 3 columns
+     % compute the description width
+        \settowidth{\dimen0}{Zeichen}%  % so viel Platz, wie "Zeichen" braucht
+        \settowidth{\dimen2}{laaaaangeEinheit}%
+        \setlength{\glsdescwidth}{\linewidth-\dimen0-\dimen2-6\tabcolsep}
+        \begin{longtable}{p{\dimen0} p{\glsdescwidth} p{\dimen2}}}%
+        {\end{longtable}}%
+    %
+% \renewcommand*{\glossaryheader}{%  Change the table header
+%  \bfseries Zeichen & \bfseries Beschreibung & \bfseries Einheit \\
+%           \hline
+%   \vspace{0.05cm}
+%   \endhead}
+\renewcommand*{\glossentry}[2]{%  Change the displayed items
+    \glstarget{##1}{\glossentryname{##1}} %
+    &  \glossentrydesc{##1}
+    & \glsunit{##1}  \tabularnewline
+}
+\renewcommand*{\glsclearpage}{}  % damit alles auf einer Seite bleibt
+}
+\makeglossaries                                   % activate glossaries-package
+\newcommand{\symbolverzeichnis}{
+\glsaddall
+\setglossarysection{section}
+\printglossary[type = symbol, style=3colger]
+\printglossary[type = konstante, style=3colger]}

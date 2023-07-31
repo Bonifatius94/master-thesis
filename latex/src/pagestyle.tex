@@ -1,0 +1,46 @@
+%   pagestyle.tex 
+%   Version 1.0     |   Peter Krönes    |   08.05.2018
+
+%%%%%%%%%%%%%%%%%%%%%%%  PAGESTYLE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{ 
+\thechapter. #1}{}}
+\renewcommand{\sectionmark}[1]{\markboth{ 
+\thesection. #1}{}}
+\fancypagestyle{scrheadings}{
+   \fancyhead[LE,RO]{\pagemark}
+   \fancyhead[LO]{\nouppercase\leftmark}
+   \fancyhead[RE]{\nouppercase\leftmark}
+   \fancyfoot[C]{}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pagestyle für die ersten Seiten von neuen Kapiteln. Hier wird automatisch Plain ausgewählt wenn fancyhdr benutzt wird.
+\fancypagestyle{plain}{%
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0pt}
+	\fancyhead[LE,RO]{\pagemark}%Seitenzahl oben-rechts im einseitigen Dokument
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pagestyle für die erste Seite der List of Figures/Tables
+\fancypagestyle{pagenumberstyle}{
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[LE,RO]{\pagemark} %Seitenzahl oben-rechts
+\fancyhead[L]{} %kein Kapitelname oben-links
+\fancyfoot[C]{} %keine Seitenzahl unten
+}
+% Unterscheidung zwischen einseitig und zweiseitigem Druck nicht nötig, da Kapitel bei zweiseitigem Druck immer rechts anfangen.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pagestyle für scrartcl
+\fancypagestyle{articlestyle}{
+\renewcommand{\headrulewidth}{0.1pt}
+\fancyhead[R]{\pagemark} %Seitenzahl oben-rechts
+\fancyhead[L]{} %kein Kapitelname oben-links
+\fancyfoot[C]{} %keine Seitenzahl unten
+}
+% Unterscheidung zwischen einseitig und zweiseitigem Druck nicht nötig, da Kapitel bei zweiseitigem Druck immer rechts anfangen.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
