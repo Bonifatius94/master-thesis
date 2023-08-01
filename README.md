@@ -14,6 +14,6 @@ a few pedestrians.
 ## Structure
 
 - code/ contains the code of robot-sf and pysocialforce, as well as the (unfinished) dreamer implementation
-- maps/ contains the training environments the were used to traing the robot
+- maps/ contains the training environments that were used to train the robot
 - proofs/ contains a mathematical proof of the obstacle force as a virtual potential field
 - results/ contains videos of the policies, trained agents, training logs and performance profiles
