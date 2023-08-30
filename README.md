@@ -11,9 +11,17 @@ a few pedestrians.
 
 ![](./results/videos/jetpack.gif)
 
+## Main Results
+
+- [thesis](./thesis.pdf)
+- [presentation](./presentation.pdf)
+- [demo video (defensive)](./demo/demo_defensive_policy.mkv)
+- [demo video (offensive)](./demo/demo_offensive_policy.mkv)
+
 ## Structure
 
 - code/ contains the code of robot-sf and pysocialforce, as well as the (unfinished) dreamer implementation
 - maps/ contains the training environments that were used to train the robot
 - proofs/ contains a mathematical proof of the obstacle force as a virtual potential field
 - results/ contains videos of the policies, trained agents, training logs and performance profiles
+- demo/ contains the videos shown during the final presentation
